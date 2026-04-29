@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intimate Health Assessment | Evidence HealthCare</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0284c7;       
+            --primary-light: #e0f2fe; 
+            --primary-dark: #0369a1;  
+            --accent: #ec4899;        
+            --accent-light: #fce7f3;  
+            --laser: #8b5cf6;         /* Special purple for this tool */
+            --laser-light: #ede9fe;
+            
+            --bg-white: #ffffff;
+            --bg-alt: #f8fafc;
+            --text-dark: #0f172a;
+            --text-main: #475569;
+            --border-color: #e2e8f0;
+            
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-alt); color: var(--text-main); line-height: 1.6; }
+        h1, h2, h3, h4 { color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Clean Header */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+        }
+        nav.scrolled { padding: 0.8rem 5%; background: rgba(255, 255, 255, 0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 45px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .btn-pink { background: linear-gradient(135deg, var(--accent), #db2777); color: white; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: none; cursor: pointer; display: inline-block; box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);}
+        .btn-pink:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4); color: white;}
+        
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+
+        /* Premium Page Header */
+        .page-header {
+            background: linear-gradient(-45deg, #f3e8ff, #ede9fe, #e0f2fe, #ffffff);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 160px 5% 8rem; text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .page-header h1 { font-size: 3.5rem; color: var(--text-dark); margin-bottom: 1rem; letter-spacing: -1px; }
+        .page-header p { font-size: 1.25rem; color: var(--text-main); max-width: 800px; margin: 0 auto; font-weight: 400; }
+
+        /* Content Container */
+        .content-container { max-width: 800px; margin: -4rem auto 6rem; padding: 0 5%; position: relative; z-index: 10; }
+
+        /* --- Quiz Container --- */
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 24px; padding: 4rem 3rem; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-top: 6px solid var(--laser); min-height: 400px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        /* Progress Bar */
+        .progress-container { width: 100%; height: 8px; background: var(--border-color); border-radius: 10px; margin-bottom: 3rem; overflow: hidden; display: none;}
+        .progress-bar { height: 100%; background: var(--laser); width: 0%; transition: width 0.4s ease; }
+
+        /* Questions */
+        .question-text { font-size: 1.8rem; color: var(--text-dark); font-weight: 700; margin-bottom: 3rem; line-height: 1.4; display: none; animation: fadeUp 0.4s ease;}
+        
+        .btn-grid { display: none; width: 100%; grid-template-columns: 1fr 1fr; gap: 1.5rem; animation: fadeUp 0.4s ease;}
+        .quiz-btn {
+            padding: 1.2rem; font-size: 1.2rem; font-weight: 700; border-radius: 12px; cursor: pointer;
+            border: 2px solid var(--border-color); background: white; color: var(--text-dark);
+            transition: var(--transition);
+        }
+        .quiz-btn:hover { border-color: var(--laser); background: var(--laser-light); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(139, 92, 246, 0.1);}
+        .quiz-btn.yes:hover { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 10px 20px rgba(236, 72, 153, 0.1);}
+
+        /* Result Section */
+        .result-section { display: none; animation: fadeUp 0.5s ease; text-align: center; width: 100%; }
+        
+        .result-title { font-size: 2.2rem; color: var(--text-dark); margin-bottom: 1rem; }
+        .result-desc { font-size: 1.2rem; color: var(--text-main); margin-bottom: 2rem; line-height: 1.7;}
+        
+        .laser-box {
+            background: linear-gradient(135deg, var(--laser-light), white);
+            border-left: 6px solid var(--laser); padding: 2rem; border-radius: 12px;
+            margin-bottom: 3rem; text-align: left; box-shadow: 0 15px 30px rgba(139, 92, 246, 0.1);
+        }
+        .laser-box h4 { color: var(--laser); font-size: 1.4rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;}
+        .laser-box p { font-size: 1.1rem; color: var(--text-dark); margin-bottom: 0; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .page-header { padding: 120px 5% 4rem; }
+            .page-header h1 { font-size: 2.2rem; }
+            .content-container { margin-top: -2rem; }
+            .quiz-card { padding: 3rem 1.5rem; min-height: 350px;}
+            .question-text { font-size: 1.4rem; }
+            .btn-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="photos/main%20logo.JPG" alt="Clinic Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#why-evidence">Why Evidence?</a></li>
+            <li><a href="index.html#specialists">Doctors</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="resources.html">Resources</a></li>
+        </ul>
+        <div class="nav-buttons" style="display: flex; align-items: center; gap: 1.5rem;">
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 0.6rem 1.5rem;">Book</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Intimate Health Assessment</h1>
+        <p>Discreetly evaluate your symptoms of urinary leakage or intimate discomfort. Discover if you are a candidate for life-changing, non-surgical LASER therapy.</p>
+    </header>
+
+    <main class="content-container">
+        
+        <div class="quiz-card" id="quizCard">
+            <!-- Start Screen -->
+            <div id="start-screen" style="width: 100%;">
+                <i class="fas fa-wand-magic-sparkles" style="font-size: 4rem; color: var(--laser); margin-bottom: 1.5rem;"></i>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Are you tolerating unnecessary discomfort?</h2>
+                <p style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 2.5rem;">Urinary leakage and intimate looseness are incredibly common, especially after childbirth or during menopause. <strong>You do not have to live with it, and you do not need surgery.</strong> Take this 10-question assessment to find out if LASER therapy is right for you.</p>
+                <button onclick="startQuiz()" class="btn-pink" style="background: linear-gradient(135deg, var(--laser), #7c3aed); box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3); padding: 1.2rem 4rem; font-size: 1.2rem;">Start Assessment</button>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <div class="question-text" id="questionText">Question goes here</div>
+            
+            <div class="btn-grid" id="btnGrid">
+                <button class="quiz-btn yes" onclick="answerQuestion(true)">Yes</button>
+                <button class="quiz-btn" onclick="answerQuestion(false)">No</button>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-section" id="resultScreen">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--laser); margin-bottom: 1rem;"></i>
+                <h3 class="result-title" id="resultTitle">Result Title</h3>
+                
+                <p class="result-desc" id="resultDesc">Result Description</p>
+                
+                <div class="laser-box" id="laserBox" style="display: none;">
+                    <h4><i class="fas fa-wand-magic-sparkles"></i> The Non-Surgical LASER Solution</h4>
+                    <p>Dr. Sanchita specializes in advanced Vaginal Rejuvenation and Incontinence LASER therapy. It is a completely <strong>painless, 15-minute outpatient procedure</strong> that requires zero anesthesia and has zero downtime. It works by stimulating your body's natural collagen production to instantly restore tightness and bladder control.</p>
+                </div>
+
+                <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 1.2rem 3rem; font-size: 1.15rem; width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);">Consult Dr. Sanchita for LASER</a>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { navbar.classList.add('scrolled'); } 
+                else { navbar.classList.remove('scrolled'); }
+            });
+        });
+
+        const questions = [
+            { q: "Do you occasionally leak urine when you cough, sneeze, or laugh loudly?", points: 3 },
+            { q: "Do you experience urine leakage during physical activities like jumping, running, or lifting weights?", points: 3 },
+            { q: "Do you frequently experience sudden, intense urges to urinate that are difficult to control?", points: 2 },
+            { q: "Have you given birth vaginally one or more times?", points: 1 },
+            { q: "Do you feel a sense of vaginal looseness, laxity, or decreased satisfaction during intimacy?", points: 2 },
+            { q: "Do you experience persistent vaginal dryness, itching, or burning?", points: 2 },
+            { q: "Do you experience pain or severe discomfort during intercourse?", points: 2 },
+            { q: "Do you suffer from recurrent Urinary Tract Infections (UTIs) or vaginal infections?", points: 2 },
+            { q: "Do you sometimes wear panty liners or pads 'just in case' of a urinary leak?", points: 3 },
+            { q: "Do these symptoms make you feel embarrassed or prevent you from enjoying your normal daily activities?", points: 2 }
+        ];
+
+        let currentQIndex = 0;
+        let totalScore = 0;
+
+        function startQuiz() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('questionText').style.display = 'block';
+            document.getElementById('btnGrid').style.display = 'grid';
+            
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const progressPct = ((currentQIndex) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progressPct + '%';
+
+            const qText = document.getElementById('questionText');
+            qText.style.animation = 'none';
+            qText.offsetHeight; 
+            qText.style.animation = 'fadeUp 0.4s ease';
+            
+            qText.innerText = `${currentQIndex + 1}. ${questions[currentQIndex].q}`;
+        }
+
+        function answerQuestion(isYes) {
+            if (isYes) {
+                totalScore += questions[currentQIndex].points;
+            }
+            currentQIndex++;
+            
+            if (currentQIndex < questions.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('questionText').style.display = 'none';
+            document.getElementById('btnGrid').style.display = 'none';
+            
+            const resultScreen = document.getElementById('resultScreen');
+            resultScreen.style.display = 'block';
+
+            const resultTitle = document.getElementById('resultTitle');
+            const resultDesc = document.getElementById('resultDesc');
+            const laserBox = document.getElementById('laserBox');
+
+            if (totalScore <= 3) {
+                resultTitle.innerText = "Healthy Pelvic Floor";
+                resultDesc.innerHTML = "You seem to have healthy pelvic floor function. However, if you ever experience occasional discomfort or minor leaks, it is always a good idea to perform Kegel exercises or consult a specialist for preventative care.";
+                laserBox.style.display = 'none';
+            } else if (totalScore <= 9) {
+                resultTitle.innerText = "Early Signs of Laxity/Incontinence";
+                resultDesc.innerHTML = "You are experiencing early signs of pelvic floor weakness or intimate discomfort. The good news? <strong>You don't have to wait for it to get worse.</strong> You are an ideal candidate for preventative LASER therapy.";
+                laserBox.style.display = 'block';
+            } else {
+                resultTitle.innerText = "Strong Candidate for LASER Therapy";
+                resultTitle.style.color = "var(--accent)";
+                resultDesc.innerHTML = "Based on your answers, you are experiencing significant symptoms of Stress Urinary Incontinence (SUI) or Vaginal Laxity that are actively disrupting your quality of life. <strong>You do not have to live with this embarrassment.</strong> You are an excellent candidate for Dr. Sanchita's advanced LASER treatments.";
+                laserBox.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

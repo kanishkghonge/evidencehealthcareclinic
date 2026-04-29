@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Nitin P. Ghonge | Evidence HealthCare Clinic</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-light: #e0f2fe; 
+            --primary-dark: #0369a1;  
+            --accent: #ec4899;        
+            --accent-light: #fce7f3;  
+            
+            --bg-white: #ffffff;
+            --bg-alt: #f8fafc;
+            --text-dark: #0f172a;
+            --text-main: #475569;
+            --border-color: #e2e8f0;
+            
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-white); color: var(--text-main); line-height: 1.7; }
+        h1, h2, h3, h4 { color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Clean Header */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+        }
+        nav.scrolled { padding: 0.8rem 5%; background: rgba(255, 255, 255, 0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 45px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-phone { font-weight: 700; color: var(--primary-dark); font-size: 1rem; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
+        .nav-phone:hover { color: var(--accent); }
+
+        .btn-pink { background: linear-gradient(135deg, var(--accent), #db2777); color: white; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: none; cursor: pointer; }
+        .btn-pink:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3); color: white;}
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+        .mobile-menu { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: white; padding: 1rem 5%; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { padding: 1rem 0; border-bottom: 1px solid var(--border-color); font-weight: 600; color: var(--text-dark); }
+        .mobile-menu a:last-child { border-bottom: none; }
+
+        /* Profile Header */
+        .profile-header {
+            background: var(--bg-alt); padding: 160px 5% 4rem; position: relative; border-bottom: 1px solid var(--border-color);
+        }
+        .header-content { max-width: 1000px; margin: 0 auto; display: flex; gap: 4rem; align-items: center; }
+        .profile-img { width: 320px; height: 420px; object-fit: cover; object-position: top; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 8px solid white; }
+        .profile-title h1 { font-size: 3rem; margin-bottom: 0.5rem; color: var(--text-dark); letter-spacing: -1px;}
+        .profile-title h2 { font-size: 1.1rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+        .degrees { font-size: 1rem; color: var(--text-main); font-weight: 600; margin-bottom: 2rem; }
+        
+        .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.5rem; }
+        .tag { background: var(--primary-light); color: var(--primary-dark); padding: 8px 16px; font-size: 0.85rem; font-weight: 700; border-radius: 50px; }
+
+        /* Profile Body */
+        .profile-body { max-width: 800px; margin: 5rem auto; padding: 0 5%; font-size: 1.15rem; color: var(--text-main); }
+        .profile-body p { margin-bottom: 1.8rem; }
+        
+        .quote-box {
+            background: var(--primary-light); border-left: 6px solid var(--primary); padding: 3rem; margin: 4rem 0;
+            border-radius: 0 20px 20px 0; font-size: 1.35rem; font-weight: 600; color: var(--primary-dark); font-style: italic;
+            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.1);
+        }
+
+        /* Footer */
+        footer { background: var(--text-dark); color: #cbd5e1; padding: 6rem 5% 3rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 4rem; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { color: white; margin-bottom: 2rem; font-size: 1.3rem; }
+        .footer-col p { margin-bottom: 1.2rem; display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; }
+        .footer-col i { color: var(--primary); margin-top: 4px; }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 5rem; padding-top: 2rem; font-size: 0.95rem; }
+        .contact-box { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-phone { display: none; }
+            .mobile-menu-btn { display: block; }
+            .profile-header { padding: 120px 5% 3rem; }
+            .header-content { flex-direction: column; text-align: center; }
+            .profile-img { width: 100%; max-width: 320px; height: auto; }
+            .profile-title h1 { font-size: 2.5rem; }
+            .tags { justify-content: center; }
+            .quote-box { padding: 2rem; border-radius: 12px; margin: 2rem 0; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="photos/main%20logo.JPG" alt="Clinic Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#why-evidence">Why Evidence?</a></li>
+            <li><a href="index.html#specialists">Doctors</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="resources.html">Resources</a></li>
+        </ul>
+        <div class="nav-buttons" style="display: flex; align-items: center; gap: 1.5rem;">
+            <a href="tel:+919999108487" class="nav-phone"><i class="fas fa-phone-alt"></i> 99991 08487</a>
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 0.6rem 1.5rem;">Book</a>
+            <div class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.toggle('active')"><i class="fas fa-bars"></i></div>
+        </div>
+        
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="tel:+919999108487" style="color: var(--primary-dark);"><i class="fas fa-phone-alt"></i> Call +91 99991 08487</a>
+            <a href="index.html#why-evidence">Why Evidence?</a>
+            <a href="index.html#specialists">Doctors</a>
+            <a href="index.html#services">Services</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="resources.html">Resources</a>
+        </div>
+    </nav>
+
+    <header class="profile-header">
+        <div class="header-content">
+            <img src="photos/dr%20nitin%20p%20ghonge.jpg" alt="Dr Nitin P Ghonge" class="profile-img">
+            <div class="profile-title">
+                <h1>Dr. Nitin P. Ghonge</h1>
+                <h2>Senior Consultant Radiologist & Ultrasonologist</h2>
+                <div class="degrees">MD, DNB, MNAMS, FICR, FIMSA</div>
+                <div class="tags">
+                    <span class="tag">Evidence-Based Diagnosis</span>
+                    <span class="tag">Lifestyle Medicine</span>
+                    <span class="tag">Expert 2nd Opinions</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="profile-body">
+        <p><strong>Dr. Nitin P. Ghonge</strong>, a distinguished radiologist, brings a wealth of expertise to Evidence HealthCare Clinic. Holding MBBS, MD, DNB [Radiology], FICR, FIMSA credentials and an Abdominal Imaging Fellowship from Asan Medical Center, Seoul, South Korea, he stands as a Consultant Radiologist & Ultrasonologist at Indraprastha Apollo Hospital, New Delhi, India.</p>
+        
+        <p>With over 15 years of post-qualification experience, Dr. Ghonge's proficiency extends to a spectrum of specialties, including Abdominal Imaging, Vascular studies, and Imaging in Fetal and Reproductive Medicine. His journey encompasses stints at eminent academic institutions, including All India Institute of Medical Sciences [AIIMS] and Diwanchand Satyapal Aggarwal Imaging Research Centre.</p>
+
+        <div class="quote-box">
+            "His ethos rests on the prudent, ethical, and comprehensive utilization of imaging technology to fathom the core of symptoms and champion efficient healthcare delivery."
+        </div>
+        
+        <p>His adeptness spans beyond Ultrasound-Doppler, encompassing X-rays, Mammography, CT, MRI, DEXA, Nuclear medicine, PET-CT, PET-MRI, and Interventional Radiology. Beyond clinical excellence, he is actively engaged in Radiology education and research, conducting insightful "Radiology Resident’s ‘Hot-seat’ review courses" at Apollo Hospital, New Delhi. This initiative exemplifies his dedication to sharing knowledge.</p>
+        
+        <p>Central to his practice is the cornerstone belief in 'Evidence-based Medicine.' He champions an approach where clinical history, patient needs, and diagnostic precision coalesce, prioritizing a "Patient-centric approach and Problem-solving attitude." With each scan, he seeks not only to visualize but to uncover, leveraging judicious scanning to unravel clinical enigmas.</p>
+
+        <div style="text-align: center; margin-top: 5rem;">
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="background: var(--primary); padding: 1.2rem 3rem; font-size: 1.1rem; display: inline-block; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.3);">Get a 2nd Opinion with Dr. Nitin</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>EVIDENCE CLINIC</h4>
+                <p>Integrating the pinnacle of clinical expertise with scientific evidence to provide a sincere, ethical, and elite healthcare experience.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="contact-box">
+                    <h5 style="color: white; margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Call Us Directly</h5>
+                    <p style="font-size: 1.2rem; font-weight: 800; color: white; margin: 0;"><i class="fas fa-phone-alt" style="color: var(--primary);"></i> +91 99991 08487</p>
+                    <p style="font-size: 1.05rem; font-weight: 600; color: #cbd5e1; margin: 0;"><i class="fas fa-phone-alt" style="color: var(--primary);"></i> +91 120-4261400</p>
+                </div>
+                <p><i class="fas fa-envelope" style="color: var(--primary);"></i> evidencehealthcareclinic@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Location</h4>
+                <p><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> D-108, SECTOR-108, Gate No. 1,<br>Close to CNG Station. NOIDA Expressway.<br>NOIDA. PIN: 201304</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Evidence HealthCare Clinic. Professional Ethical Care.
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Checklist | Evidence HealthCare</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0284c7;       
+            --primary-light: #e0f2fe; 
+            --primary-dark: #0369a1;  
+            --accent: #ec4899;        
+            --accent-light: #fce7f3;  
+            
+            --bg-white: #ffffff;
+            --bg-alt: #f8fafc;
+            --text-dark: #0f172a;
+            --text-main: #475569;
+            --border-color: #e2e8f0;
+            
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-alt); color: var(--text-main); line-height: 1.6; }
+        h1, h2, h3, h4 { color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Clean Header */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+        }
+        nav.scrolled { padding: 0.8rem 5%; background: rgba(255, 255, 255, 0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 45px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .btn-pink { background: linear-gradient(135deg, var(--accent), #db2777); color: white; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: none; cursor: pointer; display: inline-block; }
+        .btn-pink:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3); color: white;}
+        
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+        .mobile-menu { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: white; padding: 1rem 5%; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { padding: 1rem 0; border-bottom: 1px solid var(--border-color); font-weight: 600; color: var(--text-dark); }
+        .mobile-menu a:last-child { border-bottom: none; }
+
+        /* Premium Page Header */
+        .page-header {
+            background: linear-gradient(-45deg, var(--accent-light), #fce7f3, var(--primary-light), #ffffff);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 160px 5% 8rem; text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .page-header h1 { font-size: 4rem; color: var(--text-dark); margin-bottom: 1rem; letter-spacing: -1px; }
+        .page-header p { font-size: 1.25rem; color: var(--text-main); max-width: 700px; margin: 0 auto; font-weight: 400; }
+
+        /* Content Container */
+        .content-container { max-width: 900px; margin: -4rem auto 6rem; padding: 0 5%; position: relative; z-index: 10; }
+
+        /* --- Calculator --- */
+        .calc-card {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 24px; padding: 4rem 3rem; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-top: 6px solid var(--accent); margin-bottom: 3rem;
+        }
+        .calc-card h2 { font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .calc-card p { font-size: 1.15rem; color: var(--text-main); margin-bottom: 2.5rem; }
+        
+        .input-group { max-width: 450px; margin: 0 auto 2.5rem; text-align: left; }
+        .input-group label { display: block; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; font-size: 1.05rem;}
+        .input-group input { 
+            width: 100%; padding: 1.2rem 1.5rem; font-size: 1.2rem; font-family: 'Inter'; 
+            border: 2px solid var(--border-color); border-radius: 12px; outline: none; transition: var(--transition);
+        }
+        .input-group input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-light); }
+        
+        .result-box { 
+            display: none; margin-top: 3rem; padding: 2.5rem; background: var(--bg-alt); 
+            border-radius: 16px; border: 1px solid var(--border-color); animation: fadeUp 0.5s ease; 
+        }
+        .result-box h4 { color: var(--text-dark); font-size: 1.2rem; margin-bottom: 10px; }
+        .huge-date { font-size: 3rem; font-weight: 900; color: var(--accent); margin-bottom: 15px; line-height: 1.1;}
+        .ga-text { font-size: 1.2rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 1.5rem; background: var(--primary-light); padding: 10px 20px; border-radius: 50px; display: inline-block;}
+
+        /* --- Dynamic Guide Section --- */
+        .dynamic-guide { display: none; animation: fadeUp 0.8s ease; text-align: left; }
+        .context-tip { font-size: 1.15rem; color: var(--text-dark); background: white; padding: 1.8rem; border-left: 6px solid var(--primary); border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 15px 30px rgba(0,0,0,0.05); line-height: 1.7;}
+        
+        .trimester-card { 
+            background: white; border-radius: 20px; overflow: hidden; margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid var(--border-color);
+        }
+        .tri-header { padding: 1.5rem 2.5rem; background: var(--primary-light); border-bottom: 1px solid var(--primary); display: flex; align-items: center; gap: 15px; }
+        .tri-num { width: 45px; height: 45px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800; }
+        .tri-header h3 { margin: 0; font-size: 1.6rem; color: var(--primary-dark); }
+        
+        .tri-body { padding: 2.5rem; }
+        
+        .guide-list { margin-bottom: 2rem; }
+        .guide-list h4 { font-size: 1.2rem; color: var(--primary-dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; }
+        .guide-list h4 i { color: var(--accent); }
+        .guide-list ul { list-style: none; }
+        .guide-list li { position: relative; padding-left: 30px; margin-bottom: 14px; font-size: 1.1rem; }
+        .guide-list li::before { content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: #10b981; font-size: 1.2rem; top: 2px;}
+
+        .important-note { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1.5rem; border-radius: 8px; margin-top: 1rem; font-size: 1.05rem; color: #92400e; }
+
+        /* --- Custom Modal --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(5px);
+            z-index: 2000; display: none; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: white; padding: 3rem; border-radius: 20px; max-width: 500px; width: 90%;
+            text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.2); animation: fadeUp 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .modal-content::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--accent); }
+        .modal-content h3 { font-size: 1.8rem; color: var(--text-dark); margin-bottom: 1rem; }
+        .modal-content p { font-size: 1.1rem; color: var(--text-main); margin-bottom: 2rem; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .page-header { padding: 120px 5% 4rem; }
+            .page-header h1 { font-size: 2.5rem; }
+            .content-container { margin-top: -2rem; }
+            .calc-card { padding: 2.5rem 1.5rem; }
+            .huge-date { font-size: 2.2rem; }
+            .tri-body { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Disclaimer Modal -->
+    <div class="modal-overlay" id="disclaimerModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-heart" style="color: var(--accent); margin-right: 10px;"></i> Please Note</h3>
+            <p>All bodies are beautifully different! Not everything in this timeline list might apply perfectly to your specific condition or medical history.</p>
+            <p><strong>Please consult Dr. Sanchita if you have any doubts.</strong></p>
+            <button class="btn-pink" onclick="showResults()" style="width: 100%; padding: 1.2rem; font-size: 1.1rem;">I Understand</button>
+        </div>
+    </div>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="photos/main%20logo.JPG" alt="Clinic Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#why-evidence">Why Evidence?</a></li>
+            <li><a href="index.html#specialists">Doctors</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="resources.html">Resources</a></li>
+        </ul>
+        <div class="nav-buttons" style="display: flex; align-items: center; gap: 1.5rem;">
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 0.6rem 1.5rem;">Book</a>
+            <div class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.toggle('active')"><i class="fas fa-bars"></i></div>
+        </div>
+        
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="tel:+919999108487" style="color: var(--primary-dark);"><i class="fas fa-phone-alt"></i> Call +91 99991 08487</a>
+            <a href="index.html#why-evidence">Why Evidence?</a>
+            <a href="index.html#specialists">Doctors</a>
+            <a href="index.html#services">Services</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="resources.html">Resources</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Evidence Pregnancy Checklist</h1>
+        <p>Calculate your exact due date and unlock a personalized, evidence-based medical checklist tailored directly to your current trimester.</p>
+    </header>
+
+    <main class="content-container">
+        
+        <!-- EDD Calculator -->
+        <div class="calc-card">
+            <h2>Calculate Your Timeline</h2>
+            <p>Select the first day of your last period to calculate your Estimated Date of Delivery (EDD) and generate your checklist.</p>
+            
+            <div class="input-group">
+                <label for="lmp-date">First day of Last Menstrual Period (LMP):</label>
+                <input type="date" id="lmp-date">
+            </div>
+            
+            <button onclick="calculateEDD()" class="btn-pink" style="padding: 1.2rem 3rem; font-size: 1.15rem; width: 100%; max-width: 450px;">Generate Checklist</button>
+            
+            <div id="result-box" class="result-box">
+                <h4>Your Estimated Due Date is:</h4>
+                <div class="huge-date" id="edd-display"></div>
+                <div class="ga-text" id="ga-display"></div>
+            </div>
+        </div>
+
+        <div id="dynamic-guide" class="dynamic-guide">
+            <!-- Populated via JS -->
+        </div>
+
+    </main>
+
+    <script>
+        // Data for the dynamic trimester cards
+        const trimesterData = {
+            1: {
+                title: "First Trimester",
+                weeks: "Weeks 1 to 12",
+                supplements: [
+                    "<strong>Folic Acid (5mg):</strong> Keep taking this daily to prevent neural tube defects in the baby's developing brain and spine.",
+                    "<em>Note: Do not start Iron or Calcium right now unless specifically prescribed by Dr. Sanchita, as it can worsen nausea.</em>"
+                ],
+                tests: [
+                    "<strong>Early Viability Scan (6-8 Weeks):</strong> Confirms the pregnancy is safely inside the uterus and checks the baby's heartbeat.",
+                    "<strong>NT/NB Scan (11-13 Weeks):</strong> A critical ultrasound to check the skin at the back of the baby's neck (NT) and nasal bone (NB).",
+                    "<strong>Routine Blood Panel:</strong> CBC, Blood Group & Rh typing, Blood Sugar, Thyroid (TSH), VDRL, HIV, and HBsAg.",
+                    "<strong>Dual Marker Blood Test:</strong> Done along with the NT scan to screen for chromosomal conditions."
+                ]
+            },
+            2: {
+                title: "Second Trimester",
+                weeks: "Weeks 13 to 28",
+                supplements: [
+                    "<strong>Iron Supplements:</strong> Essential to support the massive increase in your blood volume and prevent anemia.",
+                    "<strong>Calcium Supplements:</strong> Crucial for the development of your baby's bones and teeth.",
+                    "<strong style='color:var(--accent);'>Important Rule:</strong> NEVER take Iron and Calcium tablets at the same time. Calcium blocks the absorption of Iron. Keep a gap of at least 4-6 hours between them."
+                ],
+                tests: [
+                    "<strong>Level 2 / TIFFA Scan (18-20 Weeks):</strong> The most detailed ultrasound. Dr. Nitin will examine every single organ of the baby from head to toe to rule out structural anomalies.",
+                    "<strong>Fetal ECHO:</strong> Recommended if there is a family history of heart defects.",
+                    "<strong>OGTT (Glucose Tolerance Test) (24-28 Weeks):</strong> You will drink a glucose solution and give blood to check for Gestational Diabetes."
+                ]
+            },
+            3: {
+                title: "Third Trimester",
+                weeks: "Weeks 29 to 40+",
+                supplements: [
+                    "<strong>Continue Iron & Calcium:</strong> Keep taking them exactly as directed through the rest of your pregnancy.",
+                    "<strong>Protein Intake:</strong> Focus heavily on a protein-rich diet to support the rapid growth phase of the baby."
+                ],
+                tests: [
+                    "<strong>Growth & Color Doppler Scan (32-34 Weeks):</strong> Checks the baby's final growth, position, amniotic fluid levels, and the blood flow (Doppler) through the umbilical cord.",
+                    "<strong>Repeat Blood & Urine Tests:</strong> Checking for late-pregnancy anemia and urine infections or protein leaks."
+                ]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { navbar.classList.add('scrolled'); } 
+                else { navbar.classList.remove('scrolled'); }
+            });
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('lmp-date').setAttribute('max', today);
+        });
+
+        let generatedHtml = "";
+
+        function calculateEDD() {
+            const lmpInput = document.getElementById('lmp-date').value;
+            if (!lmpInput) { alert("Please select the date of your last menstrual period."); return; }
+
+            const lmpDate = new Date(lmpInput);
+            const eddDate = new Date(lmpDate.getTime() + 280 * 24 * 60 * 60 * 1000);
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('edd-display').innerText = eddDate.toLocaleDateString('en-IN', options);
+
+            const today = new Date();
+            const diffTime = Math.abs(today - lmpDate);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            let weeks = 0;
+            if (today >= lmpDate && today <= eddDate) {
+                weeks = Math.floor(diffDays / 7);
+                const days = diffDays % 7;
+                document.getElementById('ga-display').innerHTML = `<i class="fas fa-baby"></i> You are currently ${weeks} weeks and ${days} days pregnant`;
+            } else if (today > eddDate) {
+                document.getElementById('ga-display').innerHTML = "Your due date has passed. Please consult your doctor.";
+                weeks = 41;
+            } else {
+                alert("Invalid date selected."); return;
+            }
+
+            buildDynamicGuide(weeks);
+            document.getElementById('disclaimerModal').style.display = 'flex';
+        }
+
+        function buildDynamicGuide(weeks) {
+            let contextTip = "";
+            let targetTri = 1;
+
+            if (weeks <= 12) {
+                targetTri = 1;
+                contextTip = `You are in your <strong>First Trimester</strong>. This is the beginning of a beautiful journey! Focus on resting and getting your early scans scheduled. Here is everything you should be doing right now:`;
+            } else if (weeks <= 28) {
+                targetTri = 2;
+                contextTip = `You are in your <strong>Second Trimester</strong>! Hopefully, you completed your early scans (like the NT/NB scan) and started Folic Acid in Trimester 1. If not, do speak to Dr. Sanchita. Regardless, here is everything you should be doing in Trimester 2:`;
+            } else {
+                targetTri = 3;
+                contextTip = `You are in your <strong>Third Trimester</strong>! Hopefully, you completed your early scans and the crucial Anomaly Scan in Trimesters 1 & 2. If not, please consult Dr. Sanchita immediately. Regardless, here is everything you should be focusing on right now as you prepare for delivery:`;
+            }
+
+            const data = trimesterData[targetTri];
+            
+            let suppList = data.supplements.map(item => `<li>${item}</li>`).join('');
+            let testList = data.tests.map(item => `<li>${item}</li>`).join('');
+
+            generatedHtml = `
+                <div class="context-tip">
+                    <i class="fas fa-info-circle" style="color: var(--primary); font-size: 1.5rem; margin-right: 12px; float: left; margin-top: 5px;"></i>
+                    ${contextTip}
+                    <div style="clear: both;"></div>
+                </div>
+                
+                <div class="trimester-card">
+                    <div class="tri-header">
+                        <div class="tri-num">${targetTri}</div>
+                        <h3>${data.title} Tasks</h3>
+                    </div>
+                    <div class="tri-body">
+                        <div class="guide-list">
+                            <h4><i class="fas fa-pills"></i> Supplements to Take</h4>
+                            <ul>${suppList}</ul>
+                        </div>
+                        <div class="guide-list" style="margin-bottom: 0;">
+                            <h4><i class="fas fa-microscope"></i> Crucial Scans & Tests</h4>
+                            <ul>${testList}</ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="important-note">
+                    <strong><i class="fas fa-calendar-check"></i> Remember:</strong> A healthy pregnancy requires a minimum of 8 to 10 clinical visits. Ensure you are scheduling regular checkups with Dr. Sanchita.
+                </div>
+            `;
+        }
+
+        function showResults() {
+            document.getElementById('disclaimerModal').style.display = 'none';
+            document.getElementById('result-box').style.display = 'block';
+            
+            const guideDiv = document.getElementById('dynamic-guide');
+            guideDiv.innerHTML = generatedHtml;
+            guideDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('result-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    </script>
+</body>
+</html>

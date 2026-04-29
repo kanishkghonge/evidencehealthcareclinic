@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparent Pricing | Evidence HealthCare Clinic</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0284c7;       
+            --primary-light: #e0f2fe; 
+            --primary-dark: #0369a1;  
+            --accent: #ec4899;        
+            --accent-light: #fce7f3;  
+            
+            --bg-white: #ffffff;
+            --bg-alt: #f8fafc;
+            --text-dark: #0f172a;
+            --text-main: #475569;
+            --border-color: #e2e8f0;
+            
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-alt); color: var(--text-main); line-height: 1.6; }
+        h1, h2, h3, h4 { color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Clean Header */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+        }
+        nav.scrolled { padding: 0.8rem 5%; background: rgba(255, 255, 255, 0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 45px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+        
+        .nav-phone { font-weight: 700; color: var(--primary-dark); font-size: 1rem; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
+        .nav-phone:hover { color: var(--accent); }
+
+        .btn-pink { background: linear-gradient(135deg, var(--accent), #db2777); color: white; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: none; cursor: pointer; }
+        .btn-pink:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3); color: white;}
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+        .mobile-menu { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: white; padding: 1rem 5%; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { padding: 1rem 0; border-bottom: 1px solid var(--border-color); font-weight: 600; color: var(--text-dark); }
+        .mobile-menu a:last-child { border-bottom: none; }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 160px 5% 6rem; text-align: center; color: white;
+        }
+        .page-header h1 { font-size: 3.5rem; color: white; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.2rem; color: var(--primary-light); max-width: 600px; margin: 0 auto; }
+        .date-stamp { font-size: 0.9rem; color: white; margin-top: 1.5rem; font-weight: 600; background: rgba(255,255,255,0.2); display: inline-block; padding: 4px 12px; border-radius: 4px; }
+
+        .pricing-container { max-width: 1100px; margin: -3rem auto 6rem; padding: 0 5%; position: relative; z-index: 10; }
+
+        /* Consultations */
+        .consult-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .consult-card { 
+            background: white; padding: 3rem; border-radius: 20px; text-align: center; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--border-color); border-top: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        .consult-card:hover { transform: translateY(-5px); }
+        .consult-card h3 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .consult-card .amount { font-size: 3.5rem; font-weight: 800; color: var(--primary); margin: 1rem 0; line-height: 1;}
+        .consult-card .amount span { font-size: 1.5rem; color: var(--text-main); vertical-align: top; }
+
+        /* Tables */
+        .pricing-section { background: white; border-radius: 20px; overflow: hidden; margin-bottom: 4rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid var(--border-color); }
+        .pricing-section h3 { background: var(--bg-alt); padding: 1.5rem 2.5rem; font-size: 1.5rem; border-bottom: 1px solid var(--border-color); margin: 0; color: var(--primary-dark); }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1.2rem 2.5rem; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 1rem; }
+        th { font-weight: 700; color: var(--text-main); font-size: 0.9rem; text-transform: uppercase; background: white; }
+        td:first-child { color: var(--text-dark); font-weight: 500; }
+        td:last-child { font-weight: 700; text-align: right; color: var(--primary); }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--primary-light); }
+
+        .laser-note { padding: 1.2rem 2.5rem; font-size: 0.95rem; color: var(--accent); background: var(--accent-light); font-weight: 600; border-top: 1px solid #fbcfe8; }
+
+        /* Footer */
+        footer { background: var(--text-dark); color: #cbd5e1; padding: 6rem 5% 3rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 4rem; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { color: white; margin-bottom: 2rem; font-size: 1.3rem; }
+        .footer-col p { margin-bottom: 1.2rem; display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; }
+        .footer-col i { color: var(--primary); margin-top: 4px; }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 5rem; padding-top: 2rem; font-size: 0.95rem; }
+        .contact-box { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-phone { display: none; }
+            .mobile-menu-btn { display: block; }
+            th, td { padding: 1rem; }
+            .page-header { padding: 120px 5% 4rem; }
+            .page-header h1 { font-size: 2.5rem; }
+            .pricing-container { margin-top: -2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="photos/main%20logo.JPG" alt="Clinic Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#why-evidence">Why Evidence?</a></li>
+            <li><a href="index.html#specialists">Doctors</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="resources.html">Resources</a></li>
+        </ul>
+        <div class="nav-buttons" style="display: flex; align-items: center; gap: 1.5rem;">
+            <a href="tel:+919999108487" class="nav-phone"><i class="fas fa-phone-alt"></i> 99991 08487</a>
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 0.6rem 1.5rem;">Book</a>
+            <div class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.toggle('active')"><i class="fas fa-bars"></i></div>
+        </div>
+        
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="tel:+919999108487" style="color: var(--primary-dark);"><i class="fas fa-phone-alt"></i> Call +91 99991 08487</a>
+            <a href="index.html#why-evidence">Why Evidence?</a>
+            <a href="index.html#specialists">Doctors</a>
+            <a href="index.html#services">Services</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="resources.html">Resources</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Transparent Pricing</h1>
+        <p>We believe in honest, upfront pricing. Value for your hard-earned money, with absolute clarity and no hidden costs.</p>
+        <div class="date-stamp">(W.E.F. 01-04-2024)</div>
+    </header>
+
+    <main class="pricing-container">
+        
+        <div class="consult-grid">
+            <div class="consult-card" style="border-top-color: var(--accent);">
+                <h3 style="color: var(--accent);">Dr. Sanchita Dube</h3>
+                <p>Gynecology Consultation</p>
+                <div class="amount" style="color: var(--accent);"><span>₹</span>1200</div>
+                <p style="font-size: 0.95rem; font-weight: 500;">Comprehensive evaluation and counseling.</p>
+            </div>
+            <div class="consult-card">
+                <h3>Dr. Nitin P. Ghonge</h3>
+                <p>Radiology Consultation</p>
+                <div class="amount"><span>₹</span>1200</div>
+                <p style="font-size: 0.95rem; font-weight: 500;">Detailed imaging diagnosis & 2nd opinions.</p>
+            </div>
+        </div>
+
+        <div class="pricing-section">
+            <h3>Ultrasound & Doppler Examinations</h3>
+            <table>
+                <thead>
+                    <tr><th>Procedure</th><th>Charges</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ultrasound Whole Abdomen</td><td>2200/-</td></tr>
+                    <tr><td>Ultrasound Upper Abdomen</td><td>1700/-</td></tr>
+                    <tr><td>Ultrasound Pelvis TAS</td><td>1700/-</td></tr>
+                    <tr><td>Ultrasound Pelvis-TVS</td><td>1700/-</td></tr>
+                    <tr><td>Ultrasound Pelvis-TVS with Doppler</td><td>2000/-</td></tr>
+                    <tr><td>Ultrasound KUB</td><td>1700/-</td></tr>
+                    <tr><td>Ultrasound Small Parts-Breast, Thyroid, Scrotum</td><td>2500/-</td></tr>
+                    <tr><td>Ultrasound NECK</td><td>2500/-</td></tr>
+                    <tr><td>TRUS</td><td>3000/-</td></tr>
+                    <tr><td>Follicular Monitoring Complete</td><td>3800/-</td></tr>
+                    <tr><td>Follicular Monitoring Single</td><td>1700/-</td></tr>
+                    <tr><td>Viability Scan-US Pelvis TAS</td><td>1700/-</td></tr>
+                    <tr><td>Viability Scan-US Pelvis TVS</td><td>1700/-</td></tr>
+                    <tr><td>Ultrasound Antenatal-Routine</td><td>2800/-</td></tr>
+                    <tr><td>Ultrasound Antenatal level I (NT/NB scan)</td><td>3000/-</td></tr>
+                    <tr><td>Ultrasound Antenatal level 2 Scan</td><td>4000/-</td></tr>
+                    <tr><td>Ultrasound follow-up Level 2</td><td>3000/-</td></tr>
+                    <tr><td>3D / 4D / 5D Fetal Ultrasound</td><td>Rs. 1000/- (plus Standard scan charges)</td></tr>
+                    <tr><td>Pregnancy Doppler</td><td>3500/-</td></tr>
+                    <tr><td>Obstetric Doppler with BPS</td><td>3700/-</td></tr>
+                    <tr><td>Carotid Doppler</td><td>3200/-</td></tr>
+                    <tr><td>Renal Doppler</td><td>3200/-</td></tr>
+                    <tr><td>Portal-venous Doppler</td><td>3200/-</td></tr>
+                    <tr><td>Abdominal aorta Doppler</td><td>3200/-</td></tr>
+                    <tr><td>Venous Doppler 1 limb</td><td>3200/-</td></tr>
+                    <tr><td>Arterial Doppler 1 limb</td><td>3200/-</td></tr>
+                    <tr><td>Venous Doppler 2 limb</td><td>3700/-</td></tr>
+                    <tr><td>Arterial Doppler 2 limbs</td><td>3700/-</td></tr>
+                    <tr><td>Arterial & Venous Doppler 2 limbs</td><td>5000/-</td></tr>
+                    <tr><td>Pelvic Doppler</td><td>2000/-</td></tr>
+                    <tr><td>Scrotal Doppler</td><td>2500/-</td></tr>
+                    <tr><td>Ultrasound Elastography of LIVER</td><td>2000/-</td></tr>
+                    <tr><td>Ultrasound LIVER for fat estimation</td><td>2000/-</td></tr>
+                    <tr><td>Fetal ECHO</td><td>2000/-</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pricing-section" style="border-top: 4px solid var(--accent);">
+            <h3 style="color: var(--accent);">Advanced Procedures</h3>
+            <table>
+                <thead>
+                    <tr><th>Procedure</th><th style="color: var(--accent);">Charges</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Laser procedure for Vaginal rejuvenation</td><td style="color: var(--accent);">6000/- per session*</td></tr>
+                    <tr><td>Laser procedure for Genito urinary symptoms of Menopause</td><td style="color: var(--accent);">6000/- per session*</td></tr>
+                    <tr><td>Laser procedure for stress urinary incontinence</td><td style="color: var(--accent);">6000/- per session*</td></tr>
+                    <tr><td>Laser procedure for Recurrent vaginal infection</td><td style="color: var(--accent);">6000/- per session*</td></tr>
+                    <tr><td>Laser procedure for cervical erosion</td><td style="color: var(--accent);">10,000/-*</td></tr>
+                    <tr><td>Laser procedure for vaginal laxity post Delivery</td><td style="color: var(--accent);">6000/- per session*</td></tr>
+                    <tr><td>Pap Smear</td><td style="color: var(--accent);">2000/-</td></tr>
+                    <tr><td>Cervical cancer vaccine</td><td style="color: var(--accent);">as per MRP</td></tr>
+                </tbody>
+            </table>
+            <div class="laser-note"><i class="fas fa-info-circle"></i> * Multiple sessions may be required based on clinical evaluation by Dr. Sanchita.</div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>EVIDENCE CLINIC</h4>
+                <p>Integrating the pinnacle of clinical expertise with scientific evidence to provide a sincere, ethical, and elite healthcare experience.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="contact-box">
+                    <h5 style="color: white; margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Call Us Directly</h5>
+                    <p style="font-size: 1.2rem; font-weight: 800; color: white; margin: 0;"><i class="fas fa-phone-alt" style="color: var(--primary);"></i> +91 99991 08487</p>
+                    <p style="font-size: 1.05rem; font-weight: 600; color: #cbd5e1; margin: 0;"><i class="fas fa-phone-alt" style="color: var(--primary);"></i> +91 120-4261400</p>
+                </div>
+                <p><i class="fas fa-envelope" style="color: var(--primary);"></i> evidencehealthcareclinic@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Location</h4>
+                <p><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> D-108, SECTOR-108, Gate No. 1,<br>Close to CNG Station. NOIDA Expressway.<br>NOIDA. PIN: 201304</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Evidence HealthCare Clinic. Professional Ethical Care.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCOS Screening Test | Evidence HealthCare</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0284c7;       
+            --primary-light: #e0f2fe; 
+            --primary-dark: #0369a1;  
+            --accent: #ec4899;        
+            --accent-light: #fce7f3;  
+            
+            --bg-white: #ffffff;
+            --bg-alt: #f8fafc;
+            --text-dark: #0f172a;
+            --text-main: #475569;
+            --border-color: #e2e8f0;
+            
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-alt); color: var(--text-main); line-height: 1.6; }
+        h1, h2, h3, h4 { color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Clean Header */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+        }
+        nav.scrolled { padding: 0.8rem 5%; background: rgba(255, 255, 255, 0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 45px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .btn-pink { background: linear-gradient(135deg, var(--accent), #db2777); color: white; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: none; cursor: pointer; display: inline-block; }
+        .btn-pink:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3); color: white;}
+        
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+
+        /* Premium Page Header */
+        .page-header {
+            background: linear-gradient(-45deg, #e0f2fe, #f0f9ff, #fce7f3, #ffffff);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 160px 5% 8rem; text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .page-header h1 { font-size: 4rem; color: var(--text-dark); margin-bottom: 1rem; letter-spacing: -1px; }
+        .page-header p { font-size: 1.25rem; color: var(--text-main); max-width: 700px; margin: 0 auto; font-weight: 400; }
+
+        /* Content Container */
+        .content-container { max-width: 800px; margin: -4rem auto 6rem; padding: 0 5%; position: relative; z-index: 10; }
+
+        /* --- Quiz Container --- */
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 24px; padding: 4rem 3rem; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-top: 6px solid var(--primary); min-height: 400px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        /* Progress Bar */
+        .progress-container { width: 100%; height: 8px; background: var(--border-color); border-radius: 10px; margin-bottom: 3rem; overflow: hidden; display: none;}
+        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+
+        /* Questions */
+        .question-text { font-size: 1.8rem; color: var(--text-dark); font-weight: 700; margin-bottom: 3rem; line-height: 1.4; display: none; animation: fadeUp 0.4s ease;}
+        
+        .btn-grid { display: none; width: 100%; grid-template-columns: 1fr 1fr; gap: 1.5rem; animation: fadeUp 0.4s ease;}
+        .quiz-btn {
+            padding: 1.2rem; font-size: 1.2rem; font-weight: 700; border-radius: 12px; cursor: pointer;
+            border: 2px solid var(--border-color); background: white; color: var(--text-dark);
+            transition: var(--transition);
+        }
+        .quiz-btn:hover { border-color: var(--primary); background: var(--primary-light); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(2, 132, 199, 0.1);}
+        .quiz-btn.yes:hover { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 10px 20px rgba(236, 72, 153, 0.1);}
+
+        /* Result Section */
+        .result-section { display: none; animation: fadeUp 0.5s ease; text-align: center; width: 100%; }
+        .score-circle { 
+            width: 150px; height: 150px; border-radius: 50%; background: var(--primary-light); 
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem;
+            border: 8px solid var(--primary); font-size: 3rem; font-weight: 900; color: var(--primary-dark);
+        }
+        .result-title { font-size: 2.2rem; color: var(--text-dark); margin-bottom: 1rem; }
+        .result-desc { font-size: 1.2rem; color: var(--text-main); margin-bottom: 3rem; line-height: 1.7;}
+        
+        .medical-disclaimer { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1.5rem; border-radius: 8px; font-size: 1rem; color: #92400e; text-align: left; margin-bottom: 2rem;}
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .page-header { padding: 120px 5% 4rem; }
+            .page-header h1 { font-size: 2.5rem; }
+            .content-container { margin-top: -2rem; }
+            .quiz-card { padding: 3rem 1.5rem; min-height: 350px;}
+            .question-text { font-size: 1.4rem; }
+            .btn-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="photos/main%20logo.JPG" alt="Clinic Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#why-evidence">Why Evidence?</a></li>
+            <li><a href="index.html#specialists">Doctors</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="resources.html">Resources</a></li>
+        </ul>
+        <div class="nav-buttons" style="display: flex; align-items: center; gap: 1.5rem;">
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 0.6rem 1.5rem;">Book</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>PCOS Screening Test</h1>
+        <p>Take this rapid 15-question clinical screening tool to calculate your probability score based on the most common symptoms of Polycystic Ovary Syndrome.</p>
+    </header>
+
+    <main class="content-container">
+        
+        <div class="quiz-card" id="quizCard">
+            <!-- Start Screen -->
+            <div id="start-screen" style="width: 100%;">
+                <i class="fas fa-heartbeat" style="font-size: 4rem; color: var(--primary); margin-bottom: 1.5rem;"></i>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Are you at risk for PCOS?</h2>
+                <p style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 2.5rem;">This test evaluates your symptoms based on established clinical criteria (like the Rotterdam criteria) to give you a probability score.</p>
+                <button onclick="startQuiz()" class="btn-pink" style="padding: 1.2rem 4rem; font-size: 1.2rem;">Start Screening</button>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <div class="question-text" id="questionText">Question goes here</div>
+            
+            <div class="btn-grid" id="btnGrid">
+                <button class="quiz-btn yes" onclick="answerQuestion(true)">Yes</button>
+                <button class="quiz-btn" onclick="answerQuestion(false)">No</button>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-section" id="resultScreen">
+                <div class="score-circle" id="scoreCircle">0</div>
+                <h3 class="result-title" id="resultTitle">Result Title</h3>
+                
+                <div class="medical-disclaimer">
+                    <strong><i class="fas fa-exclamation-triangle"></i> Important Disclaimer:</strong> This score is a screening tool, not a medical diagnosis. Even if your chances are low, if you are experiencing discomfort or irregular symptoms, you should seek a professional medical evaluation.
+                </div>
+
+                <p class="result-desc" id="resultDesc">Result Description</p>
+
+                <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 1.2rem 3rem; font-size: 1.15rem; width: 100%; max-width: 400px; box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);">Consult Dr. Sanchita</a>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { navbar.classList.add('scrolled'); } 
+                else { navbar.classList.remove('scrolled'); }
+            });
+        });
+
+        const questions = [
+            { q: "Are your menstrual cycles irregular (longer than 35 days, missing months, or highly unpredictable)?", points: 4 },
+            { q: "Have you experienced sudden or unexplained weight gain, especially around the abdomen?", points: 2 },
+            { q: "Do you struggle to lose weight despite a healthy diet and regular exercise?", points: 2 },
+            { q: "Have you noticed excess, thick hair growth on your face (chin/upper lip), chest, or back (Hirsutism)?", points: 4 },
+            { q: "Are you experiencing unusual hair thinning or hair loss on your scalp (male-pattern baldness)?", points: 2 },
+            { q: "Do you have persistent severe acne or very oily skin, especially along the jawline or cheeks?", points: 2 },
+            { q: "Have you noticed dark, velvety, thick patches of skin around your neck, armpits, or under your breasts?", points: 2 },
+            { q: "Do you frequently experience intense, uncontrollable cravings for sugar or carbohydrates?", points: 1 },
+            { q: "Have you been trying to conceive a child for over a year without success?", points: 3 },
+            { q: "Have you ever been told by a doctor that you have 'cysts' on your ovaries from a past ultrasound?", points: 4 },
+            { q: "Do you frequently experience severe mood swings, sudden anxiety, or depression?", points: 1 },
+            { q: "Do you often feel extremely fatigued or exhausted even after a full night's sleep?", points: 1 },
+            { q: "Do you experience unusually severe pelvic pain during or right before your periods?", points: 1 },
+            { q: "Is there a direct family history of PCOS, highly irregular periods, or Type 2 Diabetes?", points: 2 },
+            { q: "Do you suffer from persistent sleep issues, insomnia, or sleep apnea?", points: 1 }
+        ];
+
+        let currentQIndex = 0;
+        let totalScore = 0;
+        const maxScore = 32;
+
+        function startQuiz() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('questionText').style.display = 'block';
+            document.getElementById('btnGrid').style.display = 'grid';
+            
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            // Update progress
+            const progressPct = ((currentQIndex) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progressPct + '%';
+
+            // Animate text out and in
+            const qText = document.getElementById('questionText');
+            qText.style.animation = 'none';
+            qText.offsetHeight; // trigger reflow
+            qText.style.animation = 'fadeUp 0.4s ease';
+            
+            qText.innerText = `${currentQIndex + 1}. ${questions[currentQIndex].q}`;
+        }
+
+        function answerQuestion(isYes) {
+            if (isYes) {
+                totalScore += questions[currentQIndex].points;
+            }
+            
+            currentQIndex++;
+            
+            if (currentQIndex < questions.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('questionText').style.display = 'none';
+            document.getElementById('btnGrid').style.display = 'none';
+            
+            const resultScreen = document.getElementById('resultScreen');
+            resultScreen.style.display = 'block';
+
+            // Calculate Probability
+            const scoreCircle = document.getElementById('scoreCircle');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultDesc = document.getElementById('resultDesc');
+            
+            scoreCircle.innerText = totalScore;
+
+            if (totalScore <= 6) {
+                scoreCircle.style.borderColor = "#10b981"; // Green
+                scoreCircle.style.color = "#10b981";
+                resultTitle.innerText = "Low Probability";
+                resultDesc.innerHTML = "Based on your answers, your symptoms do not strongly align with classical PCOS criteria. However, hormonal health is complex. If you are experiencing discomfort, do not ignore it. Book a consultation for a definitive checkup.";
+            } else if (totalScore <= 14) {
+                scoreCircle.style.borderColor = "#f59e0b"; // Orange
+                scoreCircle.style.color = "#f59e0b";
+                resultTitle.innerText = "Moderate Probability";
+                resultDesc.innerHTML = "You are exhibiting several symptoms that are commonly associated with PCOS or hormonal imbalance. It is highly recommended that you undergo a proper clinical evaluation and an advanced ultrasound with Dr. Nitin to get a definitive diagnosis.";
+            } else {
+                scoreCircle.style.borderColor = "var(--accent)"; // Pink/Red
+                scoreCircle.style.color = "var(--accent)";
+                resultTitle.innerText = "High Probability";
+                resultDesc.innerHTML = "Your symptoms strongly align with the clinical markers for Polycystic Ovary Syndrome (PCOS). Early diagnosis and lifestyle intervention are critical to managing PCOS effectively. Please book a consultation with Dr. Sanchita immediately to discuss a tailored treatment plan.";
+            }
+        }
+    </script>
+</body>
+</html>

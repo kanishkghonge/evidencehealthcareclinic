@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Evidence to Cure Lifestyle Diseases | Evidence HealthCare</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0284c7;       
+            --primary-light: #e0f2fe; 
+            --primary-dark: #0369a1;  
+            --accent: #ec4899;        
+            --accent-light: #fce7f3;  
+            
+            --bg-white: #ffffff;
+            --bg-alt: #f8fafc;
+            --text-dark: #0f172a;
+            --text-main: #334155;
+            --border-color: #e2e8f0;
+            
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-alt); color: var(--text-main); line-height: 1.6; }
+        h1, h2, h3, h4 { color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Clean Header */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+            transition: var(--transition);
+        }
+        nav.scrolled { padding: 0.8rem 5%; background: rgba(255, 255, 255, 0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 45px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-phone { font-weight: 700; color: var(--primary-dark); font-size: 1rem; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
+        .nav-phone:hover { color: var(--accent); }
+
+        .btn-pink { background: linear-gradient(135deg, var(--accent), #db2777); color: white; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: none; cursor: pointer; display: inline-block; box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);}
+        .btn-pink:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4); color: white;}
+        
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+
+        /* Blog Header */
+        .blog-header {
+            background: linear-gradient(135deg, var(--accent), #be185d);
+            padding: 160px 5% 6rem; text-align: center; color: white;
+            position: relative; overflow: hidden;
+        }
+        .blog-header::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.15)"/></svg>');
+            opacity: 0.5;
+        }
+        .blog-category { display: inline-block; background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255,255,255,0.4); padding: 5px 15px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; color: white; margin-bottom: 1.5rem; letter-spacing: 1px; text-transform: uppercase;}
+        .blog-header h1 { font-size: 3.5rem; max-width: 900px; margin: 0 auto 1.5rem; line-height: 1.2; position: relative; z-index: 2;}
+        
+        .author-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 2rem; position: relative; z-index: 2;}
+        .author-box img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid white; object-fit: cover;}
+        .author-text { text-align: left; }
+        .author-name { font-weight: 800; font-size: 1.1rem; color: white;}
+        .author-date { font-size: 0.9rem; color: var(--accent-light); }
+
+        /* Blog Content */
+        .blog-container { max-width: 800px; margin: 0 auto; padding: 4rem 5%; background: white; box-shadow: 0 0 50px rgba(0,0,0,0.02); }
+        
+        .blog-content { font-family: 'Lora', serif; font-size: 1.25rem; line-height: 1.8; color: #334155; }
+        
+        .blog-content p { margin-bottom: 2rem; }
+        .blog-content h2 { font-family: 'Inter', sans-serif; font-size: 2rem; color: var(--text-dark); margin: 3rem 0 1.5rem; border-bottom: 2px solid var(--accent-light); padding-bottom: 10px;}
+        
+        /* The Drop Cap */
+        .blog-content > p:first-of-type::first-letter {
+            font-family: 'Inter', sans-serif; float: left; font-size: 4.5rem; line-height: 0.8;
+            padding-right: 15px; padding-top: 5px; color: var(--accent); font-weight: 900;
+        }
+
+        /* Case Study Callouts */
+        .case-study {
+            background: var(--bg-alt); border-left: 5px solid #10b981;
+            padding: 2.5rem; border-radius: 0 16px 16px 0; margin: 3rem 0;
+            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .case-study::before {
+            content: '\f49e'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; top: 1.5rem; right: 2rem; font-size: 2.5rem; color: #d1fae5; opacity: 0.5;
+        }
+        .case-study h3 { font-family: 'Inter', sans-serif; font-size: 1.4rem; color: #065f46; margin-bottom: 1rem; }
+        .case-study p { font-size: 1.15rem; margin-bottom: 1rem; }
+        .case-study p:last-child { margin-bottom: 0; }
+        
+        .highlight { background: #d1fae5; padding: 2px 6px; border-radius: 4px; font-weight: 600; color: #065f46;}
+
+        /* Action Box */
+        .action-box {
+            background: linear-gradient(135deg, var(--accent), #be185d);
+            padding: 3rem; border-radius: 20px; text-align: center; color: white;
+            margin-top: 4rem; font-family: 'Inter', sans-serif;
+        }
+        .action-box h3 { color: white; font-size: 1.8rem; margin-bottom: 1rem; border: none;}
+        .action-box p { font-size: 1.1rem; color: var(--accent-light); margin-bottom: 2rem; font-family: 'Inter', sans-serif;}
+
+        /* Footer */
+        footer { background: var(--text-dark); color: #cbd5e1; padding: 6rem 5% 3rem; margin-top: 0;}
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 4rem; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { color: white; margin-bottom: 2rem; font-size: 1.3rem; font-family: 'Inter', sans-serif;}
+        .footer-col p { margin-bottom: 1.2rem; display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; font-family: 'Inter', sans-serif;}
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 5rem; padding-top: 2rem; font-size: 0.95rem; font-family: 'Inter', sans-serif;}
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .blog-header { padding: 120px 5% 4rem; }
+            .blog-header h1 { font-size: 2.2rem; }
+            .blog-content { font-size: 1.1rem; }
+            .case-study { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="photos/main%20logo.JPG" alt="Clinic Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#why-evidence">Why Evidence?</a></li>
+            <li><a href="index.html#specialists">Doctors</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="resources.html">Resources</a></li>
+        </ul>
+        <div class="nav-buttons" style="display: flex; align-items: center; gap: 1.5rem;">
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 0.6rem 1.5rem;">Book</a>
+        </div>
+    </nav>
+
+    <header class="blog-header">
+        <div class="blog-category">Lifestyle Medicine</div>
+        <h1>Using Hard Evidence to Cure Lifestyle Diseases</h1>
+        <div class="author-box">
+            <div class="author-text" style="text-align: center;">
+                <div class="author-name">By Dr. Nitin</div>
+                <div class="author-date">Radiology & Fetal Medicine Specialist</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="blog-container">
+        <div class="blog-content">
+            <p>Non-Communicable Diseases (NCDs) such as Type 2 Diabetes, Hypertension, PCOS, and Non-Alcoholic Fatty Liver Disease are currently the biggest threats to global health. However, the standard medical advice for these conditions is often incredibly vague: <em>"Just eat better and exercise more."</em></p>
+
+            <p>This approach rarely works. Telling a patient to "eat better" without providing them with objective data is like telling a pilot to fly a plane without a dashboard. To truly reverse chronic illness, we must practice <span class="highlight">Evidence-Based Lifestyle Medicine</span>.</p>
+
+            <p>At Evidence HealthCare Clinic, we do not guess what diet or exercise routine will work for you. We use hard clinical evidence—collected from precise laboratory panels and high-resolution imaging—to prescribe objective, reasonable, and highly effective lifestyle modifications.</p>
+
+            <h2>Turning Shadows into Strategy</h2>
+            
+            <p>One of the most powerful tools in Lifestyle Medicine is radiology. When a patient is told they have a "fatty liver" after a routine checkup, they often feel helpless. But an ultrasound image is not just a diagnosis; it is a measurable baseline.</p>
+
+            <div class="case-study">
+                <h3>The Fatty Liver Reversal</h3>
+                <p>A patient presented with fatigue and mild abdominal discomfort. A detailed ultrasound with Dr. Nitin revealed Grade 2 Non-Alcoholic Fatty Liver Disease (NAFLD). Instead of just handing him a generic diet sheet, we used the imaging data alongside his Lipid and Fasting Insulin profiles to create a targeted metabolic plan.</p>
+                <p>Because we had hard data, we could set a concrete goal. We prescribed a clinically backed Mediterranean dietary protocol tailored to his exact insulin resistance levels. Six months later, we repeated the ultrasound. The patient could physically look at the screen and <strong>see</strong> that his liver had returned to a completely normal, healthy Grade 0 state.</p>
+                <p><strong>The Takeaway:</strong> Objective imaging transforms a vague concept ("eat less sugar") into a visible, highly motivating medical victory.</p>
+            </div>
+
+            <h2>Treating the Root Cause of PCOS</h2>
+
+            <p>Polycystic Ovary Syndrome (PCOS) is widely misunderstood. Many patients are simply prescribed birth control pills to mask their irregular periods. However, the root cause of PCOS in a vast majority of women is severe <span class="highlight">Insulin Resistance</span>.</p>
+
+            <p>We approach PCOS differently. By analyzing fasting insulin levels, HbA1c, and a comprehensive androgen panel, we can determine exactly how a patient's body processes carbohydrates. We don't believe in starving our patients. Instead, we use their blood work to prescribe the exact macronutrient ratios needed to lower their insulin levels. As the insulin drops, the testosterone drops, the ovarian cysts shrink, and natural, regular periods return.</p>
+
+            <div class="case-study" style="border-left-color: var(--accent);">
+                <h3 style="color: #9d174d;">The Hormone Reset</h3>
+                <p>We track progress not just by asking "how do you feel?", but by periodically re-checking the data. When a PCOS patient sees their Fasting Insulin drop from a dangerous 25 mIU/L down to a healthy 5 mIU/L simply through targeted nutrition and strength training, it proves that lifestyle <em>is</em> medicine.</p>
+            </div>
+
+            <h2>Your Dashboard to Health</h2>
+
+            <p>Lifestyle choices should not be based on internet fads, celebrity diets, or guesswork. They should be prescribed exactly like medicine—based on the hard, objective clinical evidence derived from your unique physiology.</p>
+
+            <ul>
+                <li><strong>Metabolic Panels:</strong> Tell us exactly how your body handles sugar and fat.</li>
+                <li><strong>Vascular Dopplers:</strong> Show us the exact health of your arteries.</li>
+                <li><strong>Pelvic/Abdominal Scans:</strong> Give us a direct look at the physical impact of your diet on your organs.</li>
+            </ul>
+
+            <div class="action-box">
+                <h3>Stop Guessing. Start Measuring.</h3>
+                <p>If you are struggling with weight, PCOS, pre-diabetes, or chronic fatigue, generic advice won't cure you. You need a data-driven strategy.</p>
+                <p>Book a comprehensive metabolic and imaging workup at Evidence HealthCare Clinic. Let us build a lifestyle prescription based on your actual clinical data.</p>
+                <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="background: white; color: var(--accent); padding: 1.2rem 3rem; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">Book a Lifestyle Consultation</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>EVIDENCE CLINIC</h4>
+                <p>Integrating the pinnacle of clinical expertise with scientific evidence to provide a sincere, ethical, and elite healthcare experience.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="contact-box">
+                    <h5 style="color: white; margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Call Us Directly</h5>
+                    <p style="font-size: 1.2rem; font-weight: 800; color: white; margin: 0;"><i class="fas fa-phone-alt" style="color: var(--primary);"></i> +91 99991 08487</p>
+                </div>
+                <p><i class="fas fa-envelope" style="color: var(--primary);"></i> evidencehealthcareclinic@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Location</h4>
+                <p><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> D-108, SECTOR-108, Gate No. 1,<br>Close to CNG Station. NOIDA Expressway.<br>NOIDA. PIN: 201304</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Evidence HealthCare Clinic. Professional Ethical Care.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

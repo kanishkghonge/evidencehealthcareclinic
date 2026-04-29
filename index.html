@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence HealthCare Clinic | Premium Care</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Premium Light Blue & Pink Palette */
+            --primary: #0284c7;       
+            --primary-light: #e0f2fe; 
+            --primary-dark: #0369a1;  
+            --accent: #ec4899;        
+            --accent-light: #fce7f3;  
+            
+            --bg-white: #ffffff;
+            --bg-alt: #f8fafc;
+            --text-dark: #0f172a;
+            --text-main: #475569;
+            --border-color: #e2e8f0;
+            
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-alt); 
+            color: var(--text-main); 
+            line-height: 1.6; 
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* --- STUNNING ANIMATIONS & GRADIENTS --- */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes floatSlow {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes slideUpPopup {
+            0% { transform: translateY(150%) scale(0.9); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes shine {
+            100% { left: 200%; }
+        }
+
+        /* Scroll Reveal Utility Classes */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* Floating Gradient Orbs */
+        .orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: 0; opacity: 0.5; pointer-events: none; }
+        .orb-blue { width: 600px; height: 600px; background: #38bdf8; top: -100px; left: -200px; animation: floatSlow 15s infinite ease-in-out; }
+        .orb-pink { width: 500px; height: 500px; background: #f472b6; bottom: -100px; right: -150px; animation: floatSlow 18s infinite ease-in-out reverse; }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        /* Premium Buttons */
+        .btn-pink {
+            background: linear-gradient(135deg, var(--accent), #db2777);
+            color: white; padding: 0.8rem 2rem; border-radius: 50px;
+            font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: none; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);
+            position: relative; overflow: hidden; display: inline-block; text-align: center;
+        }
+        .btn-pink::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg); animation: shine 6s infinite;
+        }
+        .btn-pink:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4); color: white;}
+
+        .btn-outline {
+            display: inline-block; padding: 0.8rem 2rem; border: 2px solid transparent; text-align: center;
+            background: linear-gradient(white, white) padding-box, linear-gradient(135deg, var(--primary), var(--accent)) border-box;
+            color: var(--text-dark); font-weight: 700; border-radius: 50px; transition: var(--transition);
+        }
+        .btn-outline:hover { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.2); }
+
+        .btn-deep-blue {
+            background: var(--primary-dark); color: white; padding: 1.2rem 3rem; border-radius: 50px; text-align: center;
+            font-weight: 700; transition: var(--transition); border: none; box-shadow: 0 10px 25px rgba(3, 105, 161, 0.3); display: inline-block;
+        }
+        .btn-deep-blue:hover { background: var(--text-dark); transform: translateY(-3px) scale(1.02); color: white; }
+
+        .btn-google { background: #4285F4; color: white; border: none; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.3s; box-shadow: 0 10px 20px rgba(66, 133, 244, 0.3); }
+        .btn-google:hover { transform: translateY(-3px); color: white; box-shadow: 0 15px 25px rgba(66, 133, 244, 0.4); }
+        .btn-practo { background: #28328c; color: white; border: none; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.3s; box-shadow: 0 10px 20px rgba(40, 50, 140, 0.3); }
+        .btn-practo:hover { transform: translateY(-3px); color: white; box-shadow: 0 15px 25px rgba(40, 50, 140, 0.4); }
+
+        /* Navigation */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+        nav.scrolled { padding: 0.8rem 5%; background: rgba(255, 255, 255, 0.95); }
+
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 45px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+        
+        .nav-phone { font-weight: 700; color: var(--primary-dark); font-size: 1rem; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
+        .nav-phone:hover { color: var(--accent); }
+
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+        .mobile-menu { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: white; padding: 1rem 5%; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { padding: 1rem 0; border-bottom: 1px solid var(--border-color); font-weight: 600; color: var(--text-dark); }
+        .mobile-menu a:last-child { border-bottom: none; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(-45deg, #f0f9ff, #e0f2fe, #fce7f3, #ffffff);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 220px 5% 14rem; position: relative;
+            text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-content { max-width: 900px; margin: 0 auto; position: relative; z-index: 10; }
+        .badge {
+            background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(2, 132, 199, 0.2); color: var(--primary);
+            padding: 0.6rem 1.8rem; border-radius: 50px; font-size: 0.85rem; font-weight: 800;
+            display: inline-block; margin-bottom: 2rem; box-shadow: 0 10px 20px rgba(2, 132, 199, 0.1);
+            text-transform: uppercase; letter-spacing: 1.5px;
+            backdrop-filter: blur(10px);
+        }
+        .hero h1 { font-size: 5.5rem; color: var(--text-dark); line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -2px; }
+        .hero p { font-size: 1.35rem; color: var(--text-main); margin-bottom: 3.5rem; max-width: 750px; margin-inline: auto; font-weight: 400; }
+
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+        .hero-phone { font-size: 1.25rem; font-weight: 800; color: var(--primary-dark); margin-top: 2.5rem; display: inline-flex; align-items: center; gap: 10px; background: white; padding: 0.8rem 2rem; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); transition: transform 0.3s; }
+        .hero-phone:hover { transform: translateY(-3px); }
+
+        /* --- GLASS CARDS (Reviews) --- */
+        .reviews-section { position: relative; z-index: 10; margin-top: -8rem; padding: 0 5% 6rem; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; max-width: 1300px; margin: 0 auto; }
+        .review-card {
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 2.5rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255,255,255,0.5); 
+            border-top: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+        .review-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 30px 60px rgba(2, 132, 199, 0.15); }
+        .review-card.pink-border:hover { box-shadow: 0 30px 60px rgba(236, 72, 153, 0.15); }
+        
+        .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+        .reviewer-info h4 { font-size: 1.2rem; margin-bottom: 6px; }
+        .stars { color: #facc15; font-size: 1rem; }
+        .platform-badge { font-size: 0.85rem; font-weight: 800; padding: 6px 12px; border-radius: 8px; }
+        .platform-badge.google { color: var(--primary); background: var(--primary-light); }
+        .platform-badge.practo { color: #4338ca; background: #e0e7ff; }
+        .review-card p { font-size: 1.05rem; color: var(--text-main); font-style: italic; line-height: 1.8; }
+
+        /* --- PATTERN INTERRUPT --- */
+        .why-evidence {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary)); 
+            position: relative; overflow: hidden;
+            color: white; padding: 8rem 5%; text-align: center;
+        }
+        .why-evidence .orb-pink { background: rgba(236, 72, 153, 0.6); top: -200px; right: -100px; bottom: auto; }
+        
+        .why-content { max-width: 900px; margin: 0 auto; position: relative; z-index: 10; }
+        .why-content h2 { font-size: 4rem; color: white; margin-bottom: 1.5rem; }
+        .why-content > p { font-size: 1.35rem; color: var(--primary-light); margin-bottom: 2rem; line-height: 1.8; font-weight: 300;}
+        
+        .interrupt-box {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            color: var(--text-dark); padding: 4rem; border-radius: 20px;
+            margin: 4rem 0; text-align: left; box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            border-left: 8px solid var(--accent); transition: var(--transition);
+        }
+        .interrupt-box:hover { transform: scale(1.02); box-shadow: 0 40px 80px rgba(0,0,0,0.4); }
+        .interrupt-box h3 { font-size: 2.2rem; margin-bottom: 1.5rem; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .interrupt-box p { color: var(--text-main); font-size: 1.2rem; margin-bottom: 0; line-height: 1.8; }
+
+        /* --- SPECIALISTS --- */
+        .specialists { padding: 8rem 5%; background: var(--bg-alt); position: relative; }
+        .section-header { text-align: center; margin-bottom: 5rem; }
+        .section-header h2 { font-size: 3.5rem; color: var(--text-dark); margin-bottom: 1rem; }
+        .section-header p { color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
+
+        .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 4rem; max-width: 1100px; margin: 0 auto; }
+        .spec-card {
+            background: white; border-radius: 24px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.03);
+            transition: var(--transition);
+        }
+        .spec-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.12); }
+        .spec-img-wrapper { position: relative; overflow: hidden; }
+        .spec-img { width: 100%; height: 400px; object-fit: cover; object-position: top; transition: transform 0.7s ease; }
+        .spec-card:hover .spec-img { transform: scale(1.05); }
+        .spec-info { padding: 3rem; }
+        .spec-info h3 { font-size: 2rem; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .spec-info h4 { color: var(--accent); font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;}
+        .spec-info p { color: var(--text-main); margin-bottom: 2.5rem; font-size: 1.1rem; line-height: 1.8; }
+
+        /* --- SERVICES (Interactive Cards) --- */
+        .services { padding: 4rem 5% 8rem; background: var(--bg-white); position: relative; }
+        .serv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; max-width: 1300px; margin: 0 auto; }
+        .serv-card {
+            background: var(--bg-alt); border: 1px solid var(--border-color); padding: 3.5rem 2.5rem;
+            border-radius: 20px; transition: var(--transition); text-align: center;
+            position: relative; overflow: hidden; z-index: 1;
+        }
+        .serv-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--primary-light), white);
+            z-index: -1; opacity: 0; transition: var(--transition);
+        }
+        .serv-card:hover::before { opacity: 1; }
+        .serv-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(2, 132, 199, 0.15); }
+        
+        .serv-card.pink-accent::before { background: linear-gradient(135deg, var(--accent-light), white); }
+        .serv-card.pink-accent:hover { border-color: var(--accent); box-shadow: 0 20px 40px rgba(236, 72, 153, 0.2); }
+        
+        .icon-wrapper { 
+            width: 80px; height: 80px; margin: 0 auto 2rem; border-radius: 20px;
+            background: white; box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .serv-card:hover .icon-wrapper { transform: scale(1.1) rotate(5deg); }
+        .icon-wrapper i { font-size: 2.2rem; color: var(--primary); }
+        .serv-card.pink-accent .icon-wrapper i { color: var(--accent); }
+        
+        .serv-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-dark); }
+        .serv-card p { color: var(--text-main); font-size: 1.1rem; }
+
+        /* --- DR SANCHITA FLOATING POPUP --- */
+        .laser-popup {
+            position: fixed; bottom: 40px; right: 40px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-left: 6px solid var(--accent);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.5);
+            padding: 2rem; border-radius: 16px; z-index: 2000;
+            max-width: 380px;
+            transform: translateY(150%) scale(0.9); opacity: 0;
+            animation: slideUpPopup 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 3s;
+        }
+        .laser-popup::after {
+            content: ''; position: absolute; top: 0; right: 0; width: 100px; height: 100px;
+            background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%); opacity: 0.5; z-index: -1;
+        }
+        .laser-popup h4 { color: var(--accent); margin-bottom: 12px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .laser-popup p { font-size: 1rem; color: var(--text-main); margin-bottom: 18px; line-height: 1.6; }
+        .laser-popup .close-btn { 
+            position: absolute; top: 15px; right: 20px; background: none; border: none; 
+            font-size: 1.5rem; color: #94a3b8; cursor: pointer; transition: var(--transition);
+        }
+        .laser-popup .close-btn:hover { color: var(--text-dark); transform: rotate(90deg); }
+
+        /* Footer */
+        footer { background: var(--text-dark); color: #cbd5e1; padding: 6rem 5% 3rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 4rem; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { color: white; margin-bottom: 2rem; font-size: 1.3rem; }
+        .footer-col p { margin-bottom: 1.2rem; display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; }
+        .footer-col i { color: var(--primary); margin-top: 4px; }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 5rem; padding-top: 2rem; font-size: 0.95rem; }
+        .contact-box { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-phone { display: none; }
+            .mobile-menu-btn { display: block; }
+            
+            .hero { padding: 140px 5% 8rem; }
+            .hero h1 { font-size: 3rem; }
+            .hero p { font-size: 1.15rem; margin-bottom: 2.5rem; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .hero-buttons a { width: 100%; }
+            .hero-phone { width: 100%; justify-content: center; font-size: 1.1rem; }
+            
+            /* Mobile Reviews Slider */
+            .reviews-section { margin-top: -4rem; }
+            .reviews-grid { 
+                display: flex; flex-wrap: nowrap; overflow-x: auto; 
+                scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; 
+                padding-bottom: 2rem; margin: 0 -5%; padding-left: 5%; padding-right: 5%;
+            }
+            .reviews-grid::-webkit-scrollbar { display: none; }
+            .review-card { min-width: 85vw; scroll-snap-align: center; }
+            
+            .why-content h2 { font-size: 2.5rem; }
+            .interrupt-box { padding: 2rem; margin: 2rem 0; }
+            .interrupt-box h3 { font-size: 1.6rem; }
+            
+            .section-header h2 { font-size: 2.5rem; }
+            .spec-grid { gap: 2rem; }
+            .spec-img { height: 300px; }
+            .serv-card { padding: 2rem 1.5rem; }
+            
+            .laser-popup { bottom: 20px; right: 20px; left: 20px; max-width: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dr Sanchita Toast Popup -->
+    <div class="laser-popup" id="laserPopup">
+        <button class="close-btn" onclick="document.getElementById('laserPopup').style.display='none'">&times;</button>
+        <h4><i class="fas fa-wand-magic-sparkles"></i> Suffering from Urinary Leak?</h4>
+        <p>Don't keep tolerating intimate discomfort! There is a painless, non-surgical solution. Ask Dr. Sanchita about advanced LASER and PRP therapies today.</p>
+        <a href="dr-sanchita.html" class="btn-pink" style="padding: 0.6rem 1.5rem;">Learn More</a>
+    </div>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="photos/main%20logo.JPG" alt="Clinic Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#why-evidence">Why Evidence?</a></li>
+            <li><a href="index.html#specialists">Doctors</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="resources.html">Resources</a></li>
+        </ul>
+        <div class="nav-buttons" style="display: flex; align-items: center; gap: 1.5rem;">
+            <a href="tel:+919999108487" class="nav-phone"><i class="fas fa-phone-alt"></i> 99991 08487</a>
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 0.6rem 1.5rem;">Book</a>
+            <div class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.toggle('active')"><i class="fas fa-bars"></i></div>
+        </div>
+        
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="tel:+919999108487" style="color: var(--primary-dark);"><i class="fas fa-phone-alt"></i> Call +91 99991 08487</a>
+            <a href="index.html#why-evidence">Why Evidence?</a>
+            <a href="index.html#specialists">Doctors</a>
+            <a href="index.html#services">Services</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="resources.html">Resources</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="orb orb-blue"></div>
+        <div class="orb orb-pink"></div>
+        
+        <div class="hero-content reveal">
+            <div class="badge"><i class="fas fa-certificate"></i> Excellence in Healthcare</div>
+            <h1>Healthcare That <br><span class="text-gradient">Truly Listens.</span></h1>
+            <p>We reject the 3-minute rush. We reject unnecessary procedures. Welcome to Evidence HealthCare Clinic where ethical medicine meets cutting-edge diagnostic expertise.</p>
+            <div class="hero-buttons">
+                <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 1.2rem 3rem; font-size: 1.1rem;">Schedule Your Visit</a>
+                <a href="pricing.html" class="btn-deep-blue">View Pricing</a>
+            </div>
+            <a href="tel:+919999108487" class="hero-phone"><i class="fas fa-phone-volume"></i> Speak to us: +91 99991 08487</a>
+        </div>
+    </header>
+
+    <section id="reviews" class="reviews-section">
+        <div class="reviews-grid" id="reviewsSlider">
+            <div class="review-card reveal delay-1">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <h4>Rachna Singh</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <span class="platform-badge google"><i class="fab fa-google"></i> Google</span>
+                </div>
+                <p>"A rare clinic with a genuine non-fleecing approach. Dr. Nitin took the time to explain my ultrasound results in detail and provided an honest 2nd opinion that saved me from an unnecessary surgical procedure."</p>
+            </div>
+
+            <div class="review-card pink-border reveal delay-2" style="border-top-color: var(--accent);">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <h4>Anjali M.</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <span class="platform-badge practo"><i class="fas fa-plus-square"></i> Practo</span>
+                </div>
+                <p>"Dr. Sanchita is extremely calm, polite, and friendly. She listens to all your concerns patiently and gives clear, logical explanations. She never rushes her patients and avoids unnecessary tests."</p>
+            </div>
+
+            <div class="review-card reveal delay-3">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <h4>Megha Verma</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <span class="platform-badge google"><i class="fab fa-google"></i> Google</span>
+                </div>
+                <p>"I visited for a second opinion regarding a high-risk pregnancy issue. Both doctors spent over 45 minutes with us, explaining every minute detail. The level of transparency and ethical care here is unmatched."</p>
+            </div>
+            
+            <div class="review-card pink-border reveal delay-1" style="border-top-color: var(--accent);">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <h4>Shruti K.</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <span class="platform-badge practo"><i class="fas fa-plus-square"></i> Practo</span>
+                </div>
+                <p>"The best part about Evidence Clinic is their approachability. Dr. Sanchita was available to guide me even outside appointment times over messages, which was a huge relief during my high-risk pregnancy."</p>
+            </div>
+
+            <div class="review-card reveal delay-2">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <h4>Vikas Sharma</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <span class="platform-badge google"><i class="fab fa-google"></i> Google</span>
+                </div>
+                <p>"Highly advanced ultrasound machines. Dr. Nitin is brilliant. He diagnosed a subtle issue that two other labs had completely missed. His detailed reporting and patient counseling gave us immense clarity."</p>
+            </div>
+
+            <div class="review-card pink-border reveal delay-3" style="border-top-color: var(--accent);">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <h4>Priya Das</h4>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <span class="platform-badge practo"><i class="fas fa-plus-square"></i> Practo</span>
+                </div>
+                <p>"Very luxurious and impeccably clean clinic. Appointments are respected without long waits. The holistic and balanced approach of Dr. Sanchita makes you feel like you are in the safest hands."</p>
+            </div>
+        </div>
+        
+        <div class="reveal" style="text-align: center; margin-top: 3.5rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+            <a href="https://www.google.com/search?q=EVIDENCE+HealthCare+Clinic+Reviews" target="_blank" class="btn-google"><i class="fab fa-google"></i> Read More on Google</a>
+            <a href="https://www.practo.com" target="_blank" class="btn-practo"><i class="fas fa-plus-square"></i> Read More on Practo</a>
+        </div>
+    </section>
+
+    <section id="why-evidence" class="why-evidence">
+        <div class="orb orb-pink"></div>
+        <div class="why-content reveal">
+            <h2>Why Evidence?</h2>
+            <p>Most clinics today treat you like a number on a spreadsheet.</p>
+            <p>Have you ever been rushed out of a doctor's office after just three minutes? Ever been handed a massive list of expensive tests or procedures without a clear, logical explanation as to <em>why</em> you need them?</p>
+            
+            <div class="interrupt-box reveal delay-1">
+                <h3>That stops here.</h3>
+                <p><strong>Evidence-Based Medicine (EBM)</strong> isn't just a clinical term. It is our absolute foundation. It means we strictly integrate our decades of clinical expertise with the latest, peer-reviewed scientific research. If a test, medication, or surgery is not scientifically proven to benefit your specific condition, we will not recommend it. Period.</p>
+            </div>
+
+            <p class="reveal delay-2">We do not operate on guesswork, and we absolutely do not operate on commercial targets. We believe in providing the luxury of time, definitive diagnoses, and honest 2nd opinions.</p>
+        </div>
+    </section>
+
+    <section id="specialists" class="specialists">
+        <div class="section-header reveal">
+            <p>Our Experts</p>
+            <h2>Master Clinicians</h2>
+        </div>
+        <div class="spec-grid">
+            <div class="spec-card reveal delay-1">
+                <div class="spec-img-wrapper">
+                    <img src="photos/dr%20sanchita%20dube.jpeg" alt="Dr Sanchita" class="spec-img">
+                </div>
+                <div class="spec-info">
+                    <h3>Dr. Sanchita Dube Ghonge</h3>
+                    <h4>Obstetrician & Gynecologist</h4>
+                    <p>With 15+ years of experience, Dr. Sanchita specializes in high-risk obstetrics, infertility, and revolutionary non-surgical LASER & PRP therapies.</p>
+                    <a href="dr-sanchita.html" class="btn-outline">View Full Profile</a>
+                </div>
+            </div>
+            <div class="spec-card reveal delay-2">
+                <div class="spec-img-wrapper">
+                    <img src="photos/dr%20nitin%20p%20ghonge.jpg" alt="Dr Nitin" class="spec-img">
+                </div>
+                <div class="spec-info">
+                    <h3>Dr. Nitin P. Ghonge</h3>
+                    <h4>Radiologist & Ultrasonologist</h4>
+                    <p>Holding a fellowship from South Korea, Dr. Nitin utilizes advanced imaging to unravel clinical enigmas, specializing in providing definitive 2nd opinions.</p>
+                    <a href="dr-nitin.html" class="btn-outline">View Full Profile</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="section-header reveal">
+            <p>Clinical Offerings</p>
+            <h2>Comprehensive Services</h2>
+        </div>
+        <div class="serv-grid">
+            <div class="serv-card reveal">
+                <div class="icon-wrapper"><i class="fas fa-baby"></i></div>
+                <h3>High-Risk Obstetrics</h3>
+                <p>Elite monitoring and holistic support for complicated pregnancies, ensuring maternal and fetal safety.</p>
+            </div>
+            <div class="serv-card pink-accent reveal delay-1">
+                <div class="icon-wrapper"><i class="fas fa-wand-magic-sparkles"></i></div>
+                <h3>Advanced LASER & PRP</h3>
+                <p>Revolutionary, non-surgical therapies for urinary incontinence, intimate discomfort, and vaginal rejuvenation.</p>
+            </div>
+            <div class="serv-card reveal delay-2">
+                <div class="icon-wrapper"><i class="fas fa-desktop"></i></div>
+                <h3>Advanced Ultrasound</h3>
+                <p>High-quality scanning utilizing the latest SAMSUNG V7 technology, including detailed Color Doppler.</p>
+            </div>
+            <div class="serv-card reveal">
+                <div class="icon-wrapper"><i class="fas fa-user-md"></i></div>
+                <h3>Expert 2nd Opinions</h3>
+                <p>Unbiased, definitive review of your medical files by Dr. Nitin before you consent to any major surgery.</p>
+            </div>
+            <div class="serv-card reveal delay-1">
+                <div class="icon-wrapper"><i class="fas fa-child"></i></div>
+                <h3>Fetal Medicine</h3>
+                <p>Specialized fetal ECHO, 3D/4D imaging, and anomaly scans to deeply monitor the health of your baby.</p>
+            </div>
+            <div class="serv-card reveal delay-2">
+                <div class="icon-wrapper"><i class="fas fa-dna"></i></div>
+                <h3>Gynecologic Endocrinology</h3>
+                <p>Expert diagnosis and management of hormonal imbalances, PCOS, and complex infertility issues.</p>
+            </div>
+        </div>
+        <div class="reveal" style="text-align: center; margin-top: 5rem;">
+            <a href="pricing.html" class="btn-pink" style="padding: 1.2rem 3rem; font-size: 1.1rem; box-shadow: 0 15px 35px rgba(236, 72, 153, 0.25);">View Transparent Pricing</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>EVIDENCE CLINIC</h4>
+                <p>Integrating the pinnacle of clinical expertise with scientific evidence to provide a sincere, ethical, and elite healthcare experience.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="contact-box">
+                    <h5 style="color: white; margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Call Us Directly</h5>
+                    <p style="font-size: 1.2rem; font-weight: 800; color: white; margin: 0;"><i class="fas fa-phone-alt" style="color: var(--primary);"></i> +91 99991 08487</p>
+                    <p style="font-size: 1.05rem; font-weight: 600; color: #cbd5e1; margin: 0;"><i class="fas fa-phone-alt" style="color: var(--primary);"></i> +91 120-4261400</p>
+                </div>
+                <p><i class="fas fa-envelope" style="color: var(--primary);"></i> evidencehealthcareclinic@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Location</h4>
+                <p><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> D-108, SECTOR-108, Gate No. 1,<br>Close to CNG Station. NOIDA Expressway.<br>NOIDA. PIN: 201304</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Evidence HealthCare Clinic. Professional Ethical Care.
+        </div>
+    </footer>
+
+    <!-- Scroll Animations & Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navbar Scroll Effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Intersection Observer for Reveal Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach((el) => {
+                observer.observe(el);
+            });
+            
+            // Show Hero Content immediately
+            setTimeout(() => {
+                const hero = document.querySelector('.hero-content.reveal');
+                if(hero) hero.classList.add('active');
+            }, 100);
+
+            // Mobile Reviews Auto-Slider
+            const slider = document.getElementById('reviewsSlider');
+            if (slider && window.innerWidth <= 768) {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+                
+                slider.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                });
+                slider.addEventListener('mouseleave', () => isDown = false);
+                slider.addEventListener('mouseup', () => isDown = false);
+                slider.addEventListener('mousemove', (e) => {
+                    if(!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    slider.scrollLeft = scrollLeft - walk;
+                });
+
+                setInterval(() => {
+                    if (!isDown) {
+                        const cardWidth = slider.querySelector('.review-card').offsetWidth + 20;
+                        if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+                            slider.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                        }
+                    }
+                }, 4000);
+            }
+        });
+    </script>
+</body>
+</html>

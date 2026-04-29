@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyne Health Screening Tool | Evidence HealthCare</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0284c7;       
+            --primary-light: #e0f2fe; 
+            --primary-dark: #0369a1;  
+            --accent: #ec4899;        
+            --accent-light: #fce7f3;  
+            --green: #10b981;
+            --green-light: #d1fae5;
+            
+            --bg-white: #ffffff;
+            --bg-alt: #f8fafc;
+            --text-dark: #0f172a;
+            --text-main: #475569;
+            --border-color: #e2e8f0;
+            
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-alt); color: var(--text-main); line-height: 1.6; }
+        h1, h2, h3, h4 { color: var(--text-dark); font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Clean Header */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3); box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+        }
+        nav.scrolled { padding: 0.8rem 5%; background: rgba(255, 255, 255, 0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 45px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-main); font-size: 0.95rem; font-weight: 600; transition: var(--transition); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .btn-pink { background: linear-gradient(135deg, var(--accent), #db2777); color: white; padding: 0.7rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: none; cursor: pointer; display: inline-block; box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);}
+        .btn-pink:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4); color: white;}
+        
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-dark); cursor: pointer; }
+
+        /* Premium Page Header */
+        .page-header {
+            background: linear-gradient(-45deg, #d1fae5, #ecfdf5, #e0f2fe, #ffffff);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 160px 5% 8rem; text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .page-header h1 { font-size: 3.5rem; color: var(--text-dark); margin-bottom: 1rem; letter-spacing: -1px; }
+        .page-header p { font-size: 1.25rem; color: var(--text-main); max-width: 800px; margin: 0 auto; font-weight: 400; }
+
+        /* Content Container */
+        .content-container { max-width: 800px; margin: -4rem auto 6rem; padding: 0 5%; position: relative; z-index: 10; display: block; }
+
+        /* --- Unified Tool Card --- */
+        .tool-card {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 24px; padding: 4rem 3rem; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-top: 6px solid var(--green); margin-bottom: 3rem;
+        }
+        
+        .tool-card h2 { font-size: 2.2rem; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .tool-card p { font-size: 1.15rem; color: var(--text-main); margin-bottom: 2.5rem; }
+        
+        .input-group { max-width: 500px; margin: 0 auto 2rem; text-align: left; }
+        .input-group label { display: block; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; font-size: 1.05rem;}
+        .input-group input, .input-group select { 
+            width: 100%; padding: 1.2rem; font-size: 1.1rem; font-family: 'Inter'; 
+            border: 2px solid var(--border-color); border-radius: 12px; outline: none; transition: var(--transition);
+            background: white; color: var(--text-dark);
+        }
+        .input-group input:focus, .input-group select:focus { border-color: var(--green); box-shadow: 0 0 0 4px var(--green-light); }
+
+        .btn-green { background: var(--green); color: white; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; transition: var(--transition); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); }
+        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(16, 185, 129, 0.3); background: #059669; }
+
+        /* Full Width Result Section */
+        .result-container { display: none; animation: fadeUp 0.6s ease; margin-top: 2rem;}
+        
+        .result-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.06); border: 1px solid var(--border-color);
+        }
+        
+        .result-header { padding: 2rem 3rem; background: var(--green-light); border-bottom: 1px solid var(--green); display: flex; align-items: center; justify-content: space-between; }
+        .result-header h3 { margin: 0; font-size: 1.8rem; color: #065f46; }
+        .age-badge { background: white; color: var(--text-dark); padding: 8px 16px; border-radius: 50px; font-weight: 800; font-size: 1.1rem; border: 1px solid var(--green); }
+        
+        .result-body { padding: 3rem; }
+        
+        .test-list { list-style: none; margin-bottom: 0; }
+        .test-list li { 
+            position: relative; padding-left: 45px; margin-bottom: 25px; 
+            background: var(--bg-alt); padding-top: 20px; padding-bottom: 20px; padding-right: 20px; border-radius: 12px;
+            border-left: 4px solid var(--green);
+        }
+        .test-list.blue-theme li { border-left-color: var(--primary); background: var(--primary-light); background-opacity: 0.3; }
+        
+        .test-list li::before { 
+            content: '\f0f3'; font-family: 'Font Awesome 6 Free'; font-weight: 900; 
+            position: absolute; left: 15px; top: 22px; color: var(--green); font-size: 1.2rem;
+        }
+        .test-list.blue-theme li::before { color: var(--primary); content: '\f47f'; }
+        
+        .test-title { font-size: 1.25rem; color: var(--text-dark); font-weight: 700; margin-bottom: 5px; }
+        .test-desc { font-size: 1.05rem; color: var(--text-main); }
+
+        .cta-box { text-align: center; padding: 2.5rem; background: var(--green-light); border-radius: 16px; margin-top: 1rem; border: 1px dashed var(--green); }
+        .cta-box h4 { color: #065f46; font-size: 1.4rem; margin-bottom: 10px; }
+        
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .page-header { padding: 120px 5% 4rem; }
+            .page-header h1 { font-size: 2.2rem; }
+            .content-container { margin-top: -2rem; }
+            .tool-card { padding: 3rem 1.5rem; }
+            .result-header { flex-direction: column; text-align: center; gap: 1rem; padding: 2rem 1.5rem; }
+            .result-body { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="logo">
+            <img src="photos/main%20logo.JPG" alt="Clinic Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#why-evidence">Why Evidence?</a></li>
+            <li><a href="index.html#specialists">Doctors</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="resources.html">Resources</a></li>
+        </ul>
+        <div class="nav-buttons" style="display: flex; align-items: center; gap: 1.5rem;">
+            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-pink" style="padding: 0.6rem 1.5rem;">Book</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Gyne Health Screener</h1>
+        <p>A comprehensive, evidence-based tool to determine exactly which gynecological screening tests you need right now.</p>
+    </header>
+
+    <main class="content-container">
+        
+        <!-- Unified Tool Card -->
+        <div class="tool-card">
+            <i class="fas fa-user-md" style="font-size: 4rem; color: var(--green); margin-bottom: 1rem;"></i>
+            <h2>Generate Your Screening Plan</h2>
+            <p>Enter your details below to get a highly personalized, dual-action checklist covering both age-based prevention and symptom diagnosis.</p>
+            
+            <div class="input-group">
+                <label for="birthYear">Your Birth Year:</label>
+                <input type="number" id="birthYear" placeholder="e.g., 1990" min="1920" max="2010">
+            </div>
+
+            <div class="input-group">
+                <label for="complaint">Primary Symptom (if any):</label>
+                <select id="complaint">
+                    <option value="none" selected>No specific symptom, I just want preventative screening</option>
+                    <option value="heavy">Heavy or Prolonged Periods</option>
+                    <option value="pain">Severe Pelvic Pain / Cramps</option>
+                    <option value="irregular">Missed or Irregular Periods</option>
+                    <option value="discharge">Abnormal Discharge / Itching</option>
+                    <option value="postmeno">Bleeding After Menopause</option>
+                </select>
+            </div>
+            
+            <button onclick="calculatePlan()" class="btn-green" style="padding: 1.2rem 3rem; font-size: 1.15rem; width: 100%; max-width: 500px;">Generate My Custom Plan</button>
+        </div>
+
+        <!-- Result Container -->
+        <div class="result-container" id="resultContainer">
+            <!-- Populated by JS -->
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { navbar.classList.add('scrolled'); } 
+                else { navbar.classList.remove('scrolled'); }
+            });
+        });
+
+        const ageGuidelines = {
+            under21: [
+                { title: "HPV Vaccination", desc: "If you haven't received it yet, it is highly recommended to get the HPV vaccine to prevent cervical cancer." },
+                { title: "General Consultation", desc: "A pelvic exam or ultrasound is only necessary if you are experiencing severe menstrual pain, irregular bleeding, or other specific symptoms." }
+            ],
+            twenties: [
+                { title: "Pap Smear (Cervical Screening)", desc: "Recommended every 3 years starting at age 21 to screen for cervical cancer. It is a quick, painless swab." },
+                { title: "Clinical Breast Exam (CBE)", desc: "A manual breast examination by Dr. Sanchita is recommended every 1-3 years to check for unusual lumps." }
+            ],
+            thirties: [
+                { title: "Pap Smear + HPV DNA Co-Testing", desc: "The gold standard: getting a Pap smear AND an HPV DNA test every 5 years. (Alternatively, a Pap alone every 3 years)." },
+                { title: "Clinical Breast Exam (CBE)", desc: "A manual breast examination should be done annually or every 1-3 years." },
+                { title: "Baseline Blood Panel", desc: "It is wise to get a baseline Thyroid profile (TSH) and Fasting Blood Sugar to screen for early metabolic issues." }
+            ],
+            forties: [
+                { title: "Annual Mammogram", desc: "You should begin getting an annual mammogram at age 40 to screen for early signs of breast cancer." },
+                { title: "Pap Smear + HPV DNA Co-Testing", desc: "Continue getting co-tested every 5 years." },
+                { title: "Pelvic Ultrasound (TVS)", desc: "A baseline transvaginal ultrasound is helpful to check for fibroids or cysts, especially if periods are becoming heavier during perimenopause." },
+                { title: "Routine Health Screening", desc: "Annual checks for Thyroid (TSH), Diabetes (HbA1c), and Lipid profile." }
+            ],
+            fifties: [
+                { title: "Annual Mammogram", desc: "Crucial to continue your annual breast cancer screening." },
+                { title: "Bone Mineral Density (DEXA Scan)", desc: "Highly recommended after menopause to check for osteoporosis and bone thinning." },
+                { title: "Pelvic Ultrasound (TVS)", desc: "Regular ultrasounds are recommended to measure the thickness of the uterine lining (endometrium) to rule out post-menopausal risks." },
+                { title: "Pap Smear + HPV DNA", desc: "Continue every 5 years until age 65." }
+            ]
+        };
+
+        const symptomGuidelines = {
+            heavy: {
+                title: "Heavy or Prolonged Bleeding",
+                tests: [
+                    { title: "Pelvic Ultrasound (Ideally TVS)", desc: "The most important first step. Dr. Nitin will check for structural issues like uterine fibroids, polyps, or an abnormally thick uterine lining." },
+                    { title: "Complete Blood Count (CBC)", desc: "Crucial to check your hemoglobin levels and see if the heavy bleeding has caused anemia." },
+                    { title: "Thyroid Profile (TSH)", desc: "An underactive thyroid (hypothyroidism) is a very common, easily treatable cause of heavy periods." }
+                ]
+            },
+            pain: {
+                title: "Severe Pelvic Pain / Cramps",
+                tests: [
+                    { title: "Detailed Pelvic Ultrasound", desc: "To check for conditions like Endometriosis, Adenomyosis, or Ovarian Cysts which are the primary culprits for severe pain." },
+                    { title: "Urine Routine Examination", desc: "To quickly rule out an underlying Urinary Tract Infection (UTI) or kidney stones mimicking pelvic pain." },
+                    { title: "CA-125 Blood Test", desc: "If an ovarian cyst is found on the ultrasound, this blood marker is sometimes tested for further evaluation." }
+                ]
+            },
+            irregular: {
+                title: "Missed or Irregular Periods",
+                tests: [
+                    { title: "Pelvic Ultrasound", desc: "Specifically looking at the ovaries to check for the 'string of pearls' appearance typical of PCOS (Polycystic Ovary Syndrome)." },
+                    { title: "Comprehensive Hormonal Panel", desc: "Blood tests drawn on Day 2 or 3 of your cycle: FSH, LH, Prolactin, TSH, and Free Testosterone to pinpoint the exact hormonal imbalance." },
+                    { title: "Pregnancy Test (UPT)", desc: "Always the first step to rule out if you are sexually active." }
+                ]
+            },
+            discharge: {
+                title: "Abnormal Discharge or Itching",
+                tests: [
+                    { title: "High Vaginal Swab (Culture & Sensitivity)", desc: "Dr. Sanchita will take a quick swab to identify the exact bacteria or yeast causing the infection, ensuring you get the correct antibiotic/antifungal." },
+                    { title: "Routine Urine Test", desc: "To rule out a co-existing urinary tract infection." }
+                ]
+            },
+            postmeno: {
+                title: "Bleeding After Menopause",
+                tests: [
+                    { title: "Transvaginal Ultrasound (TVS)", desc: "URGENT STEP: Dr. Nitin will meticulously measure the thickness of your endometrium (uterine lining). If it is thicker than normal, further testing is required." },
+                    { title: "Endometrial Biopsy", desc: "If the ultrasound shows a thick lining, Dr. Sanchita will take a tiny sample of the lining in the clinic to completely rule out endometrial cancer." }
+                ]
+            }
+        };
+
+        function calculatePlan() {
+            const birthYear = document.getElementById('birthYear').value;
+            const complaint = document.getElementById('complaint').value;
+
+            if (!birthYear || birthYear < 1920 || birthYear > new Date().getFullYear()) {
+                alert("Please enter a valid birth year."); return;
+            }
+
+            const age = new Date().getFullYear() - parseInt(birthYear);
+            let ageGroup = [];
+            
+            if (age < 21) ageGroup = ageGuidelines.under21;
+            else if (age >= 21 && age < 30) ageGroup = ageGuidelines.twenties;
+            else if (age >= 30 && age < 40) ageGroup = ageGuidelines.thirties;
+            else if (age >= 40 && age < 50) ageGroup = ageGuidelines.forties;
+            else ageGroup = ageGuidelines.fifties;
+
+            let symptomHtml = "";
+            if (complaint !== "none") {
+                const sympData = symptomGuidelines[complaint];
+                symptomHtml = `
+                    <div style="margin-top: 3.5rem; padding-top: 3rem; border-top: 2px dashed var(--border-color);">
+                        <h4 style="color: var(--primary-dark); font-size: 1.6rem; margin-bottom: 1rem;"><i class="fas fa-search-plus"></i> Additional Diagnostics: ${sympData.title}</h4>
+                        <p style="margin-bottom: 2rem; font-size: 1.1rem; color: var(--text-dark);">Because you are experiencing symptoms, Dr. Sanchita will likely prioritize these specific tests to find the root cause, in addition to your routine preventative care:</p>
+                        <ul class="test-list blue-theme">
+                            ${sympData.tests.map(test => `
+                                <li>
+                                    <div class="test-title">${test.title}</div>
+                                    <div class="test-desc">${test.desc}</div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            let html = `
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>Your Comprehensive Health Plan</h3>
+                        <div class="age-badge">Age: ${age} Years</div>
+                    </div>
+                    <div class="result-body">
+                        
+                        <h4 style="color: #065f46; font-size: 1.6rem; margin-bottom: 1.5rem;"><i class="fas fa-shield-alt"></i> Routine Preventative Screening</h4>
+                        <ul class="test-list">
+                            ${ageGroup.map(test => `
+                                <li>
+                                    <div class="test-title">${test.title}</div>
+                                    <div class="test-desc">${test.desc}</div>
+                                </li>
+                            `).join('')}
+                        </ul>
+
+                        ${symptomHtml}
+
+                        <div class="cta-box" style="margin-top: 3rem;">
+                            <h4><i class="fas fa-user-md"></i> Take Charge of Your Health</h4>
+                            <p>Whether it's routine prevention or diagnosing a specific issue, early detection is key. Bring your reports or get them done at our clinic for a definitive diagnosis.</p>
+                            <a href="https://evidencehealthcareclinic.setmore.com/bookappointment" target="_blank" class="btn-green" style="margin-top: 15px; display: inline-block; width: auto; padding: 1rem 3rem;">Consult Dr. Sanchita Today</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const container = document.getElementById('resultContainer');
+            container.innerHTML = html;
+            container.style.display = 'block';
+            
+            container.style.animation = 'none';
+            container.offsetHeight; 
+            container.style.animation = 'fadeUp 0.6s ease';
+            
+            setTimeout(() => {
+                container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    </script>
+</body>
+</html>
